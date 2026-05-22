@@ -9,6 +9,7 @@ from rich.console import Console
 from fraud_platform.anomaly.anomaly_detector import AnomalyDetector
 from fraud_platform.cases.case_manager import CaseManager
 from fraud_platform.config import load_rules_config
+from fraud_platform.events.event_handlers import run_event_pipeline as execute_event_pipeline
 from fraud_platform.graph.graph_analyzer import GraphAnalyzer
 from fraud_platform.reports.report_writer import ReportWriter
 from fraud_platform.rules.rule_engine import RuleEngine
@@ -55,6 +56,16 @@ def run_pipeline(records: int = typer.Option(1000, min=1), generated: Path = typ
     paths = run_scoring(generated / "transactions.csv", output, Path("config/rules.yaml"))
     console.print(f"Pipeline completed for {records} records")
     console.print(f"Summary: {paths['summary']}")
+
+
+@app.command("run-event-pipeline")
+def run_event_pipeline(records: int = typer.Option(1000, min=1), generated: Path = typer.Option(Path("data/generated")), output: Path = typer.Option(Path("data/output"))):
+    generate_sample_data(records=records, output_dir=generated)
+    transactions = pd.read_csv(generated / "transactions.csv")
+    paths = execute_event_pipeline(transactions, output, Path("config/rules.yaml"))
+    console.print(f"Event pipeline completed for {records} records")
+    console.print(f"Event log: {paths['event_log']}")
+    console.print(f"Event summary: {paths['event_pipeline_summary']}")
 
 
 def run_scoring(transactions_path: Path, output_dir: Path, rules_path: Path) -> dict[str, Path]:

@@ -13,6 +13,7 @@ This is a lightweight Python foundation, not a production distributed system.
 - `scoring`: weighted risk score aggregation
 - `cases`: case creation for review/block decisions
 - `reports`: CSV, JSON, and audit report writing
+- `events`: Kafka-style in-process EventBus, event envelopes, and JSONL event logging
 - `cli`: Typer command interface
 
 The package layout is microservices-inspired so each domain can later become its own event-driven service.
@@ -33,8 +34,17 @@ python -m fraud_platform generate-data --records 1000
 python -m fraud_platform score-transactions --transactions data/generated/transactions.csv --output data/output
 python -m fraud_platform simulate-attack --attack-type velocity
 python -m fraud_platform run-pipeline --records 1000
+python -m fraud_platform run-event-pipeline --records 1000
 pytest
 ```
+
+## Why Kafka Is Designed But Not Deployed Locally
+
+Kafka is the target production event backbone for the platform, but the local prototype intentionally does not require a Kafka broker, Docker, or distributed infrastructure. Instead, the project includes an in-process `EventBus` that simulates topic-based communication with the same service boundaries used in the production design.
+
+The local EventBus publishes events to topics such as `transaction.events`, `rule.hit.events`, `anomaly.alert.events`, `graph.alert.events`, `risk.score.events`, `fraud.case.events`, and `audit.events`. It also writes `data/output/event_log.jsonl` so the event flow can be inspected and replay concepts can be discussed.
+
+This keeps the prototype easy to run, validates the event-driven fraud detection logic, and gives a straightforward migration path to Kafka topics later. The event schemas and event envelope model define the contract that a production Kafka deployment would use.
 
 ## Generated Data
 
@@ -59,6 +69,8 @@ The generator intentionally includes high-amount transactions, velocity fraud, f
 - `graph_alerts.csv`
 - `anomaly_alerts.csv`
 - `summary.json`
+- `event_log.jsonl`
+- `event_pipeline_summary.json`
 - `audit_log.csv`
 
 ## Sample Output
@@ -73,8 +85,8 @@ Decisions:
 
 ## Current Limitations
 
-- Local batch simulation only
-- No Kafka/event broker yet
+- Local batch and in-process event simulation only
+- No deployed Kafka broker yet
 - No persistent database
 - No model registry or online ML serving
 - Graph analysis uses in-memory NetworkX

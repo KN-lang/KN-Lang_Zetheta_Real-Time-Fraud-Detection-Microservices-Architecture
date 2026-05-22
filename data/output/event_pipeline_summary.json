@@ -1,0 +1,21 @@
+{
+  "event_count": 4520,
+  "topics_used": [
+    "anomaly.alert.events",
+    "audit.events",
+    "fraud.case.events",
+    "graph.alert.events",
+    "risk.score.events",
+    "rule.hit.events",
+    "transaction.events"
+  ],
+  "transactions_processed": 1000,
+  "risk_scores_generated": 1000,
+  "fraud_cases_generated": 62,
+  "rule_hit_events": 109,
+  "anomaly_alert_events": 86,
+  "graph_alert_events": 3,
+  "audit_events": 2260,
+  "event_log_path": "data/output/event_log.jsonl",
+  "generated_at": "2026-05-22T15:07:04.462727+00:00"
+}
