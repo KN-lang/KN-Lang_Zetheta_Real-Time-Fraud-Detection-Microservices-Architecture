@@ -1,0 +1,87 @@
+transaction_id,anomaly_type,anomaly_score,reason
+T000000,GLOBAL_AMOUNT_ZSCORE,95.57,Amount z-score 4.78 is unusually high
+T000001,GLOBAL_AMOUNT_ZSCORE,100.0,Amount z-score 8.34 is unusually high
+T000002,GLOBAL_AMOUNT_ZSCORE,100.0,Amount z-score 5.92 is unusually high
+T000003,GLOBAL_AMOUNT_ZSCORE,79.88,Amount z-score 3.99 is unusually high
+T000004,GLOBAL_AMOUNT_ZSCORE,100.0,Amount z-score 12.27 is unusually high
+T000005,GLOBAL_AMOUNT_ZSCORE,65.62,Amount z-score 3.28 is unusually high
+T000006,GLOBAL_AMOUNT_ZSCORE,85.59,Amount z-score 4.28 is unusually high
+T000007,GLOBAL_AMOUNT_ZSCORE,100.0,Amount z-score 6.49 is unusually high
+T000008,GLOBAL_AMOUNT_ZSCORE,100.0,Amount z-score 10.13 is unusually high
+T000009,GLOBAL_AMOUNT_ZSCORE,91.29,Amount z-score 4.56 is unusually high
+T000071,GLOBAL_AMOUNT_ZSCORE,59.92,Amount z-score 3.00 is unusually high
+T000072,GLOBAL_AMOUNT_ZSCORE,100.0,Amount z-score 6.56 is unusually high
+T000073,GLOBAL_AMOUNT_ZSCORE,100.0,Amount z-score 6.56 is unusually high
+T000074,GLOBAL_AMOUNT_ZSCORE,100.0,Amount z-score 6.56 is unusually high
+T000076,GLOBAL_AMOUNT_ZSCORE,59.92,Amount z-score 3.00 is unusually high
+T000079,GLOBAL_AMOUNT_ZSCORE,59.92,Amount z-score 3.00 is unusually high
+T000080,GLOBAL_AMOUNT_ZSCORE,100.0,Amount z-score 6.56 is unusually high
+T000081,GLOBAL_AMOUNT_ZSCORE,59.92,Amount z-score 3.00 is unusually high
+T000082,GLOBAL_AMOUNT_ZSCORE,64.48,Amount z-score 3.22 is unusually high
+T000083,GLOBAL_AMOUNT_ZSCORE,64.62,Amount z-score 3.23 is unusually high
+T000084,GLOBAL_AMOUNT_ZSCORE,64.77,Amount z-score 3.24 is unusually high
+T000085,GLOBAL_AMOUNT_ZSCORE,64.91,Amount z-score 3.25 is unusually high
+T000086,GLOBAL_AMOUNT_ZSCORE,65.05,Amount z-score 3.25 is unusually high
+T000087,GLOBAL_AMOUNT_ZSCORE,65.19,Amount z-score 3.26 is unusually high
+T000088,GLOBAL_AMOUNT_ZSCORE,65.34,Amount z-score 3.27 is unusually high
+T000089,GLOBAL_AMOUNT_ZSCORE,65.48,Amount z-score 3.27 is unusually high
+T000261,GLOBAL_AMOUNT_ZSCORE,65.92,Amount z-score 3.30 is unusually high
+T000528,GLOBAL_AMOUNT_ZSCORE,61.87,Amount z-score 3.09 is unusually high
+T000590,GLOBAL_AMOUNT_ZSCORE,74.24,Amount z-score 3.71 is unusually high
+T000815,GLOBAL_AMOUNT_ZSCORE,77.44,Amount z-score 3.87 is unusually high
+T000000,CUSTOMER_AMOUNT_DEVIATION,100.0,Amount is 6.5x customer average
+T000001,CUSTOMER_AMOUNT_DEVIATION,100.0,Amount is 6.5x customer average
+T000002,CUSTOMER_AMOUNT_DEVIATION,96.77,Amount is 5.4x customer average
+T000003,CUSTOMER_AMOUNT_DEVIATION,94.41,Amount is 5.2x customer average
+T000004,CUSTOMER_AMOUNT_DEVIATION,100.0,Amount is 11.8x customer average
+T000005,CUSTOMER_AMOUNT_DEVIATION,100.0,Amount is 5.7x customer average
+T000006,CUSTOMER_AMOUNT_DEVIATION,90.01,Amount is 5.0x customer average
+T000007,CUSTOMER_AMOUNT_DEVIATION,100.0,Amount is 6.9x customer average
+T000008,CUSTOMER_AMOUNT_DEVIATION,100.0,Amount is 8.1x customer average
+T000009,CUSTOMER_AMOUNT_DEVIATION,100.0,Amount is 5.7x customer average
+T000020,CUSTOMER_AMOUNT_DEVIATION,57.08,Amount is 3.2x customer average
+T000029,CUSTOMER_AMOUNT_DEVIATION,54.12,Amount is 3.0x customer average
+T000041,CUSTOMER_AMOUNT_DEVIATION,55.62,Amount is 3.1x customer average
+T000042,CUSTOMER_AMOUNT_DEVIATION,59.41,Amount is 3.3x customer average
+T000043,CUSTOMER_AMOUNT_DEVIATION,74.71,Amount is 4.2x customer average
+T000045,CUSTOMER_AMOUNT_DEVIATION,56.86,Amount is 3.2x customer average
+T000046,CUSTOMER_AMOUNT_DEVIATION,70.24,Amount is 3.9x customer average
+T000047,CUSTOMER_AMOUNT_DEVIATION,62.78,Amount is 3.5x customer average
+T000063,CUSTOMER_AMOUNT_DEVIATION,57.68,Amount is 3.2x customer average
+T000068,CUSTOMER_AMOUNT_DEVIATION,55.82,Amount is 3.1x customer average
+T000070,CUSTOMER_AMOUNT_DEVIATION,61.11,Amount is 3.4x customer average
+T000071,CUSTOMER_AMOUNT_DEVIATION,59.41,Amount is 3.3x customer average
+T000072,CUSTOMER_AMOUNT_DEVIATION,100.0,Amount is 6.4x customer average
+T000073,CUSTOMER_AMOUNT_DEVIATION,100.0,Amount is 7.5x customer average
+T000074,CUSTOMER_AMOUNT_DEVIATION,100.0,Amount is 9.1x customer average
+T000079,CUSTOMER_AMOUNT_DEVIATION,75.14,Amount is 4.2x customer average
+T000080,CUSTOMER_AMOUNT_DEVIATION,100.0,Amount is 5.7x customer average
+T000081,CUSTOMER_AMOUNT_DEVIATION,81.59,Amount is 4.5x customer average
+T000082,CUSTOMER_AMOUNT_DEVIATION,73.38,Amount is 4.1x customer average
+T000083,CUSTOMER_AMOUNT_DEVIATION,89.55,Amount is 5.0x customer average
+T000084,CUSTOMER_AMOUNT_DEVIATION,83.25,Amount is 4.6x customer average
+T000086,CUSTOMER_AMOUNT_DEVIATION,83.66,Amount is 4.6x customer average
+T000087,CUSTOMER_AMOUNT_DEVIATION,67.33,Amount is 3.7x customer average
+T000088,CUSTOMER_AMOUNT_DEVIATION,91.64,Amount is 5.1x customer average
+T000089,CUSTOMER_AMOUNT_DEVIATION,100.0,Amount is 6.2x customer average
+T000183,CUSTOMER_AMOUNT_DEVIATION,65.68,Amount is 3.6x customer average
+T000195,CUSTOMER_AMOUNT_DEVIATION,72.06,Amount is 4.0x customer average
+T000261,CUSTOMER_AMOUNT_DEVIATION,64.41,Amount is 3.6x customer average
+T000344,CUSTOMER_AMOUNT_DEVIATION,58.99,Amount is 3.3x customer average
+T000355,CUSTOMER_AMOUNT_DEVIATION,74.62,Amount is 4.1x customer average
+T000408,CUSTOMER_AMOUNT_DEVIATION,56.63,Amount is 3.1x customer average
+T000463,CUSTOMER_AMOUNT_DEVIATION,69.11,Amount is 3.8x customer average
+T000476,CUSTOMER_AMOUNT_DEVIATION,72.51,Amount is 4.0x customer average
+T000485,CUSTOMER_AMOUNT_DEVIATION,69.91,Amount is 3.9x customer average
+T000527,CUSTOMER_AMOUNT_DEVIATION,66.84,Amount is 3.7x customer average
+T000528,CUSTOMER_AMOUNT_DEVIATION,64.4,Amount is 3.6x customer average
+T000590,CUSTOMER_AMOUNT_DEVIATION,73.02,Amount is 4.1x customer average
+T000596,CUSTOMER_AMOUNT_DEVIATION,93.56,Amount is 5.2x customer average
+T000699,CUSTOMER_AMOUNT_DEVIATION,57.14,Amount is 3.2x customer average
+T000744,CUSTOMER_AMOUNT_DEVIATION,55.86,Amount is 3.1x customer average
+T000815,CUSTOMER_AMOUNT_DEVIATION,100.0,Amount is 5.8x customer average
+T000877,CUSTOMER_AMOUNT_DEVIATION,65.08,Amount is 3.6x customer average
+T000888,CUSTOMER_AMOUNT_DEVIATION,57.69,Amount is 3.2x customer average
+T000913,CUSTOMER_AMOUNT_DEVIATION,62.78,Amount is 3.5x customer average
+T000934,CUSTOMER_AMOUNT_DEVIATION,58.57,Amount is 3.3x customer average
+T000985,CUSTOMER_AMOUNT_DEVIATION,57.36,Amount is 3.2x customer average

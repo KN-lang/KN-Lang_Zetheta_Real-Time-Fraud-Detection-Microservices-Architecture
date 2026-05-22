@@ -1,0 +1,29 @@
+[build-system]
+requires = ["setuptools>=68", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "fraud-detection-platform"
+version = "0.1.0"
+description = "Local simulation prototype for real-time fraud detection microservices architecture"
+requires-python = ">=3.11"
+dependencies = [
+    "pandas>=2.0",
+    "pydantic>=2.0",
+    "typer>=0.9",
+    "networkx>=3.0",
+    "numpy>=1.24",
+    "pytest>=7.0",
+    "rich>=13.0",
+    "pyyaml>=6.0",
+]
+
+[project.scripts]
+fraud-platform = "fraud_platform.cli:app"
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.pytest.ini_options]
+pythonpath = ["src"]
+testpaths = ["tests"]

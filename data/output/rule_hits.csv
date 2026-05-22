@@ -1,0 +1,110 @@
+transaction_id,rule_id,severity,reason,score
+T000000,amount_greater_than_50000,HIGH,Amount 75000.00 exceeds 50000,85
+T000001,amount_greater_than_50000,HIGH,Amount 125000.00 exceeds 50000,85
+T000002,amount_greater_than_50000,HIGH,Amount 91000.00 exceeds 50000,85
+T000003,amount_greater_than_50000,HIGH,Amount 64000.00 exceeds 50000,85
+T000004,amount_greater_than_50000,HIGH,Amount 180000.00 exceeds 50000,85
+T000005,amount_greater_than_50000,HIGH,Amount 54000.00 exceeds 50000,85
+T000006,amount_greater_than_50000,HIGH,Amount 68000.00 exceeds 50000,85
+T000007,amount_greater_than_50000,HIGH,Amount 99000.00 exceeds 50000,85
+T000008,amount_greater_than_50000,HIGH,Amount 150000.00 exceeds 50000,85
+T000009,amount_greater_than_50000,HIGH,Amount 72000.00 exceeds 50000,85
+T000072,amount_greater_than_50000,HIGH,Amount 100000.00 exceeds 50000,85
+T000073,amount_greater_than_50000,HIGH,Amount 100000.00 exceeds 50000,85
+T000074,amount_greater_than_50000,HIGH,Amount 100000.00 exceeds 50000,85
+T000080,amount_greater_than_50000,HIGH,Amount 100000.00 exceeds 50000,85
+T000082,amount_greater_than_50000,HIGH,Amount 53200.00 exceeds 50000,85
+T000083,amount_greater_than_50000,HIGH,Amount 53300.00 exceeds 50000,85
+T000084,amount_greater_than_50000,HIGH,Amount 53400.00 exceeds 50000,85
+T000085,amount_greater_than_50000,HIGH,Amount 53500.00 exceeds 50000,85
+T000086,amount_greater_than_50000,HIGH,Amount 53600.00 exceeds 50000,85
+T000087,amount_greater_than_50000,HIGH,Amount 53700.00 exceeds 50000,85
+T000088,amount_greater_than_50000,HIGH,Amount 53800.00 exceeds 50000,85
+T000089,amount_greater_than_50000,HIGH,Amount 53900.00 exceeds 50000,85
+T000261,amount_greater_than_50000,HIGH,Amount 54208.96 exceeds 50000,85
+T000528,amount_greater_than_50000,HIGH,Amount 51369.67 exceeds 50000,85
+T000590,amount_greater_than_50000,HIGH,Amount 60047.12 exceeds 50000,85
+T000815,amount_greater_than_50000,HIGH,Amount 62289.58 exceeds 50000,85
+T000023,failed_attempts_more_than_3,HIGH,More than 3 failed attempts in 30 minutes,80
+T000018,failed_attempts_more_than_3,HIGH,More than 3 failed attempts in 30 minutes,80
+T000019,failed_attempts_more_than_3,HIGH,More than 3 failed attempts in 30 minutes,80
+T000015,velocity_more_than_5_txn_10_min,HIGH,More than 5 transactions in 10 minutes,82
+T000016,velocity_more_than_5_txn_10_min,HIGH,More than 5 transactions in 10 minutes,82
+T000017,velocity_more_than_5_txn_10_min,HIGH,More than 5 transactions in 10 minutes,82
+T000024,high_risk_country,MEDIUM,Transaction originated from high-risk country NG,65
+T000025,high_risk_country,MEDIUM,Transaction originated from high-risk country KP,65
+T000026,high_risk_country,MEDIUM,Transaction originated from high-risk country IR,65
+T000027,high_risk_country,MEDIUM,Transaction originated from high-risk country RU,65
+T000028,high_risk_country,MEDIUM,Transaction originated from high-risk country CN,65
+T000029,high_risk_country,MEDIUM,Transaction originated from high-risk country NG,65
+T000030,high_risk_country,MEDIUM,Transaction originated from high-risk country KP,65
+T000031,high_risk_country,MEDIUM,Transaction originated from high-risk country IR,65
+T000002,new_device_high_amount,HIGH,First observed device used for amount above 25000,78
+T000007,new_device_high_amount,HIGH,First observed device used for amount above 25000,78
+T000046,new_device_high_amount,HIGH,First observed device used for amount above 25000,78
+T000047,new_device_high_amount,HIGH,First observed device used for amount above 25000,78
+T000072,new_device_high_amount,HIGH,First observed device used for amount above 25000,78
+T000081,new_device_high_amount,HIGH,First observed device used for amount above 25000,78
+T000082,new_device_high_amount,HIGH,First observed device used for amount above 25000,78
+T000083,new_device_high_amount,HIGH,First observed device used for amount above 25000,78
+T000084,new_device_high_amount,HIGH,First observed device used for amount above 25000,78
+T000085,new_device_high_amount,HIGH,First observed device used for amount above 25000,78
+T000086,new_device_high_amount,HIGH,First observed device used for amount above 25000,78
+T000087,new_device_high_amount,HIGH,First observed device used for amount above 25000,78
+T000088,new_device_high_amount,HIGH,First observed device used for amount above 25000,78
+T000089,new_device_high_amount,HIGH,First observed device used for amount above 25000,78
+T000196,new_device_high_amount,HIGH,First observed device used for amount above 25000,78
+T000008,round_amount_transfer,MEDIUM,Round amount transfer divisible by 10000,55
+T000040,round_amount_transfer,MEDIUM,Round amount transfer divisible by 10000,55
+T000058,round_amount_transfer,MEDIUM,Round amount transfer divisible by 10000,55
+T000060,round_amount_transfer,MEDIUM,Round amount transfer divisible by 10000,55
+T000061,round_amount_transfer,MEDIUM,Round amount transfer divisible by 10000,55
+T000063,round_amount_transfer,MEDIUM,Round amount transfer divisible by 10000,55
+T000064,round_amount_transfer,MEDIUM,Round amount transfer divisible by 10000,55
+T000066,round_amount_transfer,MEDIUM,Round amount transfer divisible by 10000,55
+T000067,round_amount_transfer,MEDIUM,Round amount transfer divisible by 10000,55
+T000069,round_amount_transfer,MEDIUM,Round amount transfer divisible by 10000,55
+T000070,round_amount_transfer,MEDIUM,Round amount transfer divisible by 10000,55
+T000071,round_amount_transfer,MEDIUM,Round amount transfer divisible by 10000,55
+T000072,round_amount_transfer,MEDIUM,Round amount transfer divisible by 10000,55
+T000073,round_amount_transfer,MEDIUM,Round amount transfer divisible by 10000,55
+T000074,round_amount_transfer,MEDIUM,Round amount transfer divisible by 10000,55
+T000075,round_amount_transfer,MEDIUM,Round amount transfer divisible by 10000,55
+T000076,round_amount_transfer,MEDIUM,Round amount transfer divisible by 10000,55
+T000077,round_amount_transfer,MEDIUM,Round amount transfer divisible by 10000,55
+T000078,round_amount_transfer,MEDIUM,Round amount transfer divisible by 10000,55
+T000079,round_amount_transfer,MEDIUM,Round amount transfer divisible by 10000,55
+T000080,round_amount_transfer,MEDIUM,Round amount transfer divisible by 10000,55
+T000081,round_amount_transfer,MEDIUM,Round amount transfer divisible by 10000,55
+T000032,same_ip_many_customers,HIGH,IP used by more than 5 customers,78
+T000033,same_ip_many_customers,HIGH,IP used by more than 5 customers,78
+T000034,same_ip_many_customers,HIGH,IP used by more than 5 customers,78
+T000035,same_ip_many_customers,HIGH,IP used by more than 5 customers,78
+T000036,same_ip_many_customers,HIGH,IP used by more than 5 customers,78
+T000037,same_ip_many_customers,HIGH,IP used by more than 5 customers,78
+T000038,same_ip_many_customers,HIGH,IP used by more than 5 customers,78
+T000039,same_ip_many_customers,HIGH,IP used by more than 5 customers,78
+T000040,same_ip_many_customers,HIGH,IP used by more than 5 customers,78
+T000041,same_ip_many_customers,HIGH,IP used by more than 5 customers,78
+T000042,same_ip_many_customers,HIGH,IP used by more than 5 customers,78
+T000043,same_ip_many_customers,HIGH,IP used by more than 5 customers,78
+T000044,same_ip_many_customers,HIGH,IP used by more than 5 customers,78
+T000045,same_ip_many_customers,HIGH,IP used by more than 5 customers,78
+T000046,same_ip_many_customers,HIGH,IP used by more than 5 customers,78
+T000047,same_ip_many_customers,HIGH,IP used by more than 5 customers,78
+T000032,shared_device_many_customers,HIGH,Device used by more than 4 customers,78
+T000033,shared_device_many_customers,HIGH,Device used by more than 4 customers,78
+T000034,shared_device_many_customers,HIGH,Device used by more than 4 customers,78
+T000035,shared_device_many_customers,HIGH,Device used by more than 4 customers,78
+T000036,shared_device_many_customers,HIGH,Device used by more than 4 customers,78
+T000037,shared_device_many_customers,HIGH,Device used by more than 4 customers,78
+T000038,shared_device_many_customers,HIGH,Device used by more than 4 customers,78
+T000039,shared_device_many_customers,HIGH,Device used by more than 4 customers,78
+T000040,shared_device_many_customers,HIGH,Device used by more than 4 customers,78
+T000041,shared_device_many_customers,HIGH,Device used by more than 4 customers,78
+T000042,shared_device_many_customers,HIGH,Device used by more than 4 customers,78
+T000043,shared_device_many_customers,HIGH,Device used by more than 4 customers,78
+T000044,shared_device_many_customers,HIGH,Device used by more than 4 customers,78
+T000045,shared_device_many_customers,HIGH,Device used by more than 4 customers,78
+T000046,shared_device_many_customers,HIGH,Device used by more than 4 customers,78
+T000047,shared_device_many_customers,HIGH,Device used by more than 4 customers,78

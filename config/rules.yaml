@@ -1,0 +1,41 @@
+high_risk_countries:
+  - NG
+  - KP
+  - IR
+  - RU
+  - CN
+rules:
+  amount_greater_than_50000:
+    threshold: 50000
+    severity: HIGH
+    score: 85
+  failed_attempts_more_than_3:
+    threshold: 3
+    window_minutes: 30
+    severity: HIGH
+    score: 80
+  velocity_more_than_5_txn_10_min:
+    threshold: 5
+    window_minutes: 10
+    severity: HIGH
+    score: 82
+  high_risk_country:
+    severity: MEDIUM
+    score: 65
+  new_device_high_amount:
+    amount_threshold: 25000
+    severity: HIGH
+    score: 78
+  round_amount_transfer:
+    modulo: 10000
+    min_amount: 10000
+    severity: MEDIUM
+    score: 55
+  same_ip_many_customers:
+    threshold: 5
+    severity: HIGH
+    score: 78
+  shared_device_many_customers:
+    threshold: 4
+    severity: HIGH
+    score: 78
