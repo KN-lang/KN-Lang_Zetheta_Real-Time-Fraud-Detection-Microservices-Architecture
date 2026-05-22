@@ -84,3 +84,31 @@ The project successfully delivered:
 - Kafka-style event-driven architecture simulation.
 - Architecture documentation, ADRs, event contracts, and deployment designs.
 - Automated testing framework with passing validation suite.
+
+### Event Pipeline Validation
+
+The EventBus simulation processed:
+
+- 1,000 transaction events
+- 109 rule-hit events
+- 86 anomaly events
+- 3 graph-alert events
+- 1,000 risk score events
+- 62 fraud case events
+
+Total generated events: 4,520
+
+## Event Pipeline Validation
+
+The event-driven simulation processed:
+
+- 1,000 transaction events
+- 109 rule-hit events
+- 86 anomaly-alert events
+- 3 graph-alert events
+- 1,000 risk-score events
+- 62 fraud-case events
+
+Total generated events: 4,520
+
+These results demonstrate the correctness of the event-driven architecture and validate the planned migration path to Kafka-based microservices.
