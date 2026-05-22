@@ -1,0 +1,17 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "RiskScoreEvent",
+  "type": "object",
+  "required": ["transaction_id", "risk_score", "decision"],
+  "properties": {
+    "transaction_id": { "type": "string" },
+    "customer_id": { "type": "string" },
+    "rule_score": { "type": "number" },
+    "anomaly_score": { "type": "number" },
+    "graph_score": { "type": "number" },
+    "risk_score": { "type": "number" },
+    "decision": { "type": "string", "enum": ["APPROVE", "REVIEW", "BLOCK"] },
+    "reason": { "type": "string" },
+    "evaluated_at": { "type": "string", "format": "date-time" }
+  }
+}

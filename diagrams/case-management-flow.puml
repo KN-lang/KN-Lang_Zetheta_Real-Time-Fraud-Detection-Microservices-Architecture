@@ -1,0 +1,13 @@
+@startuml case-management-flow
+state "New Case" as New
+state "Assigned" as Assigned
+state "Investigation" as Investigation
+state "Resolved" as Resolved
+
+[*] --> New : Decision == REVIEW
+New --> Assigned : Analyst claim
+Assigned --> Investigation : Start review
+Investigation --> Resolved : Confirmed Fraud
+Investigation --> Resolved : False Positive
+Resolved --> [*]
+@enduml

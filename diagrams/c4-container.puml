@@ -1,0 +1,39 @@
+@startuml c4-container
+!include https://raw.githubusercontent.com/plantuml-stdlib/C4-PlantUML/master/C4_Container.puml
+
+System_Boundary(fraud_platform, "Fraud Detection Platform") {
+    Container(gateway, "API Gateway", "Go/NGINX", "Ingests transactions and provides security.")
+    Container(ingestor, "Transaction Ingestor", "Go", "Validates and publishes transactions.")
+    ContainerQueue(kafka, "Apache Kafka", "Event Bus", "Asynchronous messaging backbone.")
+    
+    Container(rule_engine, "Rule Engine Service", "Go/Python", "Evaluates static business rules.")
+    Container(anomaly_service, "Anomaly Detection Service", "Python/ML", "Detects behavioral outliers.")
+    Container(graph_service, "Graph Analysis Service", "Python/Neo4j", "Analyzes entity relationships.")
+    
+    Container(risk_scorer, "Risk Scoring Service", "Go", "Aggregates signals and makes decisions.")
+    
+    Container(case_manager, "Case Management Service", "Java/Spring", "Manages investigation workflows.")
+    ContainerDb(case_db, "Case Database", "PostgreSQL", "Stores cases and analyst notes.")
+    
+    Container(investigation_ui, "Investigation Dashboard", "React", "UI for fraud analysts.")
+}
+
+Rel_Ext(banking_system, gateway, "Sends transactions", "HTTPS/JSON")
+Rel(gateway, ingestor, "Routes requests")
+Rel(ingestor, kafka, "Publishes 'transaction' events")
+
+Rel(kafka, rule_engine, "Consumes transactions")
+Rel(kafka, anomaly_service, "Consumes transactions")
+Rel(kafka, graph_service, "Consumes transactions")
+
+Rel(rule_engine, kafka, "Publishes 'rule-hits'")
+Rel(anomaly_service, kafka, "Publishes 'anomaly-alerts'")
+Rel(graph_service, kafka, "Publishes 'graph-alerts'")
+
+Rel(kafka, risk_scorer, "Consumes all signals")
+Rel(risk_scorer, kafka, "Publishes 'risk-decisions'")
+
+Rel(kafka, case_manager, "Consumes 'risk-decisions' (REVIEW)")
+Rel(case_manager, case_db, "Reads/Writes")
+Rel(investigation_ui, case_manager, "API calls")
+@enduml

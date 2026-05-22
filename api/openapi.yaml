@@ -1,0 +1,86 @@
+openapi: 3.0.3
+info:
+  title: Real-Time Fraud Detection Platform API
+  description: API for ingesting transactions and managing fraud cases.
+  version: 1.0.0
+paths:
+  /v1/transactions:
+    post:
+      summary: Ingest a new transaction
+      operationId: ingestTransaction
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Transaction'
+      responses:
+        '202':
+          description: Transaction accepted for processing
+        '400':
+          description: Invalid transaction data
+  /v1/cases:
+    get:
+      summary: List fraud cases
+      operationId: listCases
+      parameters:
+        - name: status
+          in: query
+          schema:
+            type: string
+            enum: [OPEN, IN_PROGRESS, RESOLVED]
+      responses:
+        '200':
+          description: List of fraud cases
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/FraudCase'
+components:
+  schemas:
+    Transaction:
+      type: object
+      required:
+        - transaction_id
+        - customer_id
+        - amount
+        - currency
+        - transaction_type
+        - channel
+      properties:
+        transaction_id:
+          type: string
+        customer_id:
+          type: string
+        amount:
+          type: number
+          minimum: 0
+        currency:
+          type: string
+          default: INR
+        transaction_type:
+          type: string
+          enum: [UPI, CARD, NEFT, RTGS, WALLET]
+        channel:
+          type: string
+          enum: [MOBILE, WEB, ATM, POS, API]
+        timestamp:
+          type: string
+          format: date-time
+    FraudCase:
+      type: object
+      properties:
+        case_id:
+          type: string
+        transaction_id:
+          type: string
+        risk_score:
+          type: number
+        status:
+          type: string
+          enum: [OPEN, IN_PROGRESS, RESOLVED]
+        created_at:
+          type: string
+          format: date-time

@@ -1,0 +1,24 @@
+@startuml graph-analysis-flow
+start
+:New Transaction;
+:Update Graph Nodes (Customer, Device, IP, Account);
+:Create Relationship Edges;
+split
+   :Search for Shared Entities;
+   if (Customer Count > Threshold?) then (yes)
+     :Trigger SHARED_ENTITY Alert;
+   endif
+split again
+   :Search for Mule Patterns;
+   if (In-degree > Threshold?) then (yes)
+     :Trigger MULE_ACCOUNT Alert;
+   endif
+split again
+   :Detect Suspicious Clusters;
+   if (Dense Subgraph found?) then (yes)
+     :Trigger CLUSTER Alert;
+   endif
+end split
+:Publish Graph Alerts to Kafka;
+stop
+@enduml

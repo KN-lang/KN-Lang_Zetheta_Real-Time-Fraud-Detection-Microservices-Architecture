@@ -1,0 +1,18 @@
+@startuml c4-component-fraud-scoring
+!include https://raw.githubusercontent.com/plantuml-stdlib/C4-PlantUML/master/C4_Component.puml
+
+Container_Boundary(scoring_boundary, "Risk Scoring Service") {
+    Component(event_consumer, "Signal Consumer", "Kafka Consumer", "Listens for rule-hits, anomalies, and graph alerts.")
+    Component(correlation_engine, "Correlation Engine", "In-memory / Redis", "Groups signals by transaction_id using a temporal window.")
+    Component(weight_evaluator, "Weighted Scorer", "Logic", "Applies weights (50/25/25) to signals.")
+    Component(decision_engine, "Decision Engine", "Logic", "Maps score to Approve/Review/Block.")
+    Component(decision_publisher, "Decision Publisher", "Kafka Producer", "Publishes the final decision event.")
+}
+
+Rel(kafka, event_consumer, "Signals")
+Rel(event_consumer, correlation_engine, "Passes signals")
+Rel(correlation_engine, weight_evaluator, "Provides aggregated signals")
+Rel(weight_evaluator, decision_engine, "Calculates raw score")
+Rel(decision_engine, decision_publisher, "Triggers decision")
+Rel(decision_publisher, kafka, "Decision Event")
+@enduml

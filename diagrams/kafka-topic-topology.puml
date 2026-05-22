@@ -1,0 +1,26 @@
+@startuml kafka-topic-topology
+node "Kafka Cluster" {
+    [transactions] <<Topic>>
+    [rule-hits] <<Topic>>
+    [anomaly-alerts] <<Topic>>
+    [graph-alerts] <<Topic>>
+    [risk-decisions] <<Topic>>
+    [audit-log] <<Topic>>
+}
+
+[Ingestor] --> [transactions]
+[transactions] --> [Rule Engine]
+[transactions] --> [Anomaly Detector]
+[transactions] --> [Graph Analyzer]
+
+[Rule Engine] --> [rule-hits]
+[Anomaly Detector] --> [anomaly-alerts]
+[Graph Analyzer] --> [graph-alerts]
+
+[rule-hits] --> [Risk Scorer]
+[anomaly-alerts] --> [Risk Scorer]
+[graph-alerts] --> [Risk Scorer]
+
+[Risk Scorer] --> [risk-decisions]
+[risk-decisions] --> [Case Manager]
+@enduml

@@ -1,0 +1,35 @@
+@startuml event-driven-fraud-flow
+skinparam monochrome true
+participant "Banking System" as BS
+participant "Ingestor" as ING
+queue "Kafka: transactions" as KT
+participant "Rule Engine" as RE
+participant "Anomaly Detector" as AD
+participant "Graph Analyzer" as GA
+queue "Kafka: signals" as KS
+participant "Risk Scorer" as RS
+queue "Kafka: decisions" as KD
+participant "Case Manager" as CM
+
+BS -> ING: POST /transaction
+ING -> KT: Publish TransactionEvent
+ING --> BS: 202 Accepted
+
+par
+    KT -> RE: Consume
+    RE -> KS: Publish RuleHit
+else
+    KT -> AD: Consume
+    AD -> KS: Publish AnomalyAlert
+else
+    KT -> GA: Consume
+    GA -> KS: Publish GraphAlert
+end
+
+KS -> RS: Consume signals (Correlation)
+RS -> KD: Publish RiskDecision
+
+alt Decision == REVIEW
+    KD -> CM: Create Fraud Case
+end
+@enduml

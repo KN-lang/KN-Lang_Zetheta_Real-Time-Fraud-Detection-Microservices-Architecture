@@ -1,0 +1,17 @@
+@startuml c4-context
+!include https://raw.githubusercontent.com/plantuml-stdlib/C4-PlantUML/master/C4_Context.puml
+
+Person(customer, "Banking Customer", "Performs financial transactions.")
+Person(analyst, "Fraud Analyst", "Investigates suspicious transactions.")
+System(fraud_system, "Real-Time Fraud Detection Platform", "Analyzes transactions in real-time to detect and prevent fraud.")
+
+System_Ext(banking_system, "Core Banking System", "Source of transaction data.")
+System_Ext(notification_system, "Notification System", "Sends alerts to customers.")
+
+Rel(customer, banking_system, "Initiates transaction")
+Rel(banking_system, fraud_system, "Sends transaction for evaluation", "REST/Kafka")
+Rel(fraud_system, banking_system, "Sends decision (Approve/Block)", "Kafka/Webhook")
+Rel(fraud_system, analyst, "Flags cases for review", "Web UI")
+Rel(analyst, fraud_system, "Resolves fraud cases", "Web UI")
+Rel(fraud_system, notification_system, "Triggers alerts", "API")
+@enduml

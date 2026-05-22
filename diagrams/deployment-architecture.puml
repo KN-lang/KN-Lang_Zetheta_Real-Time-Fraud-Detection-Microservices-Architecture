@@ -1,0 +1,28 @@
+@startuml deployment-architecture
+package "AWS Cloud" {
+    node "EKS Cluster (Kubernetes)" {
+        [Ingestor Pods]
+        [Rule Engine Pods]
+        [Anomaly Pods]
+        [Graph Analysis Pods]
+        [Risk Scorer Pods]
+        [Case Manager Pods]
+    }
+    
+    node "Managed Services" {
+        database "Amazon MSK (Kafka)" as Kafka
+        database "Amazon Neptune (Graph)" as GraphDB
+        database "Amazon RDS (Postgres)" as CaseDB
+        database "Amazon ElastiCache (Redis)" as Cache
+        storage "Amazon S3 (Audit)" as S3
+    }
+}
+
+[Ingestor Pods] --> Kafka
+Kafka --> [Rule Engine Pods]
+Kafka --> [Anomaly Pods]
+Kafka --> [Graph Analysis Pods]
+[Graph Analysis Pods] --> GraphDB
+[Case Manager Pods] --> CaseDB
+[Rule Engine Pods] --> Cache
+@enduml

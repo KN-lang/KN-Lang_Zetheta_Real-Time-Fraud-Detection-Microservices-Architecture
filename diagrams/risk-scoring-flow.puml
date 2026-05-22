@@ -1,0 +1,16 @@
+@startuml risk-scoring-flow
+start
+:Receive Transaction Signals;
+:Fetch Weights (Rule: 50%, Anomaly: 25%, Graph: 25%);
+:Calculate Weighted Score;
+if (Score >= 70?) then (yes)
+  :Decision = BLOCK;
+elseif (Score >= 40?) then (yes)
+  :Decision = REVIEW;
+  :Flag for Case Management;
+else (no)
+  :Decision = APPROVE;
+endif
+:Publish RiskDecisionEvent;
+stop
+@enduml
