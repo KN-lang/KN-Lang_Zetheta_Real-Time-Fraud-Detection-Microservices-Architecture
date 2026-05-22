@@ -69,4 +69,18 @@ The simulation produced the following metrics:
 - **Load Testing**: Validate 5,000 TPS targets on Kubernetes.
 
 ## GitHub Repository
-INSERT_GITHUB_REPO_LINK_HERE
+https://github.com/KN-lang/KN-Lang_Zetheta_Real-Time-Fraud-Detection-Microservices-Architecture.git
+
+## Key Achievements
+
+The project successfully delivered:
+
+- A working fraud detection simulation platform.
+- Rule-based fraud detection with configurable rules.
+- Statistical anomaly detection for transaction outliers.
+- Graph-based entity relationship analysis.
+- Weighted risk scoring and decisioning.
+- Automated fraud case generation.
+- Kafka-style event-driven architecture simulation.
+- Architecture documentation, ADRs, event contracts, and deployment designs.
+- Automated testing framework with passing validation suite.

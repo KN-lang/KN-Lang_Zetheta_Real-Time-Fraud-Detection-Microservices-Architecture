@@ -4,6 +4,16 @@ Local Phase 1 prototype for a fintech fraud detection platform. It simulates tra
 
 This is a lightweight Python foundation, not a production distributed system.
 
+## Business Context
+
+Modern payment ecosystems process millions of transactions across UPI, cards, wallets, NEFT, RTGS, and digital channels.
+
+Fraudsters exploit stolen credentials, mule accounts, synthetic identities, shared devices, bot networks, and compromised payment instruments to perform unauthorized transactions.
+
+Financial institutions require real-time fraud detection systems that can analyze transaction behavior, identify suspicious patterns, assess risk, and initiate intervention before financial losses occur.
+
+This project demonstrates a fraud detection platform capable of combining rule-based detection, statistical anomaly analysis, graph relationship intelligence, and risk scoring to identify suspicious activities in near real time.
+
 ## Architecture
 
 - `simulation`: deterministic synthetic transactions and relationship data
@@ -17,6 +27,23 @@ This is a lightweight Python foundation, not a production distributed system.
 - `cli`: Typer command interface
 
 The package layout is microservices-inspired so each domain can later become its own event-driven service.
+
+## Features
+
+| Capability | Status |
+|------------|---------|
+| Transaction Generation | ✅ |
+| Rule-Based Detection | ✅ |
+| Statistical Anomaly Detection | ✅ |
+| Graph Relationship Analysis | ✅ |
+| Risk Scoring | ✅ |
+| Fraud Case Generation | ✅ |
+| Event-Driven Pipeline Simulation | ✅ |
+| Kafka Target Architecture | ✅ |
+| OpenAPI Contract | ✅ |
+| Architecture Documentation | ✅ |
+| Automated Tests | ✅ |
+
 
 ## Setup
 
