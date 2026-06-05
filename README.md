@@ -59,4 +59,6 @@
 
     ## Contact / Author
     Kshitij Chauhan  
-    Repository name: `SWE-2C_FraudDetection_KshitijChauhan`
+    Repository name: `KN-Lang_Zetheta_Real-Time-Fraud-Detection-Microservices-Architecture`
+    Repository link: `https://github.com/KN-lang/KN-Lang_Zetheta_Real-Time-Fraud-Detection-Microservices-Architecture`
+ 
