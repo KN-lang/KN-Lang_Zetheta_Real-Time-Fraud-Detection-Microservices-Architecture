@@ -6,6 +6,7 @@ groups:
         for: 1m
         labels:
           severity: P1
+          runbook: docs/runbooks/P1_Transaction_Pipeline_Down.md
         annotations:
           summary: Transaction ingestion is down
       - alert: KafkaConsumerLagHigh
@@ -13,8 +14,38 @@ groups:
         for: 5m
         labels:
           severity: P2
+          runbook: docs/runbooks/P2_Kafka_Consumer_Lag.md
+        annotations:
+          summary: Kafka consumer lag is above threshold
       - alert: DecisionLatencySLABreach
         expr: histogram_quantile(0.95, rate(fraud_decision_latency_ms_bucket[5m])) > 250
         for: 10m
         labels:
           severity: P2
+          runbook: docs/runbooks/P2_Latency_SLA_Breach.md
+        annotations:
+          summary: Fraud decision p95 latency breached SLA
+      - alert: ModelDriftWarning
+        expr: fraud_model_psi > 0.2
+        for: 30m
+        labels:
+          severity: P3
+          runbook: docs/runbooks/P3_Model_Drift_Warning.md
+        annotations:
+          summary: ML model drift warning threshold exceeded
+      - alert: RuleFalsePositiveRateHigh
+        expr: fraud_rule_false_positive_rate > 0.15
+        for: 1h
+        labels:
+          severity: P3
+          runbook: docs/runbooks/P3_Rule_False_Positive_Rate.md
+        annotations:
+          summary: Fraud rule false-positive rate is high
+      - alert: DashboardDataFreshnessLow
+        expr: fraud_dashboard_projection_lag_seconds > 900
+        for: 30m
+        labels:
+          severity: P4
+          runbook: docs/runbooks/P4_Dashboard_Data_Freshness.md
+        annotations:
+          summary: Dashboard projection data is stale

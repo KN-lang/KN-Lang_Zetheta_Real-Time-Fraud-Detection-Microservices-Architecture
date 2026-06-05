@@ -5,6 +5,176 @@ info:
 servers:
   - url: "https://api.shieldpay.example.com"
 paths:
+  /transactions:
+    post:
+      summary: "Submit a transaction for fraud screening"
+      operationId: "submitTransactionCanonical"
+      security:
+        - oauth2:
+            - fraud:write
+      x-rate-limit-tier: "merchant"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/TransactionRequest"
+            examples:
+              cardNotPresent:
+                value:
+                  transactionId: "txn_100045"
+                  customerId: "cust_784"
+                  merchantId: "mrc_992"
+                  amount:
+                    currency: "INR"
+                    amount: 24500.0
+                  channel: "ECOMMERCE"
+                  mcc: "5732"
+                  deviceId: "dev_abc123"
+                  ipAddress: "203.0.113.10"
+      responses:
+        202:
+          description: "Accepted"
+          headers:
+            X-RateLimit-Remaining:
+              schema:
+                type: "integer"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/TransactionAccepted"
+        400:
+          description: "Invalid request"
+        401:
+          description: "Unauthorized"
+        429:
+          description: "Rate limit exceeded"
+  /transactions/{id}/risk-score:
+    get:
+      summary: "Get transaction risk score"
+      operationId: "getTransactionRiskScoreCanonical"
+      security:
+        - oauth2:
+            - fraud:read
+      x-rate-limit-tier: "endpoint"
+      parameters:
+        - $ref: "#/components/parameters/TransactionId"
+      responses:
+        200:
+          description: "Risk score"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/RiskScore"
+              examples:
+                reviewDecision:
+                  value:
+                    transactionId: "txn_100045"
+                    score: 72.5
+                    decision: "REVIEW"
+                    reasons:
+                      - "FR-001@v2 velocity threshold"
+                      - "Graph proximity to confirmed mule cluster"
+        404:
+          description: "Not found"
+  /cases:
+    get:
+      summary: "List investigation cases"
+      operationId: "listCasesCanonical"
+      security:
+        - oauth2:
+            - fraud:read
+      x-rate-limit-tier: "endpoint"
+      parameters:
+        - name: "status"
+          in: "query"
+          schema:
+            type: "string"
+      responses:
+        200:
+          description: "Cases"
+          content:
+            application/json:
+              schema:
+                type: "array"
+                items:
+                  $ref: "#/components/schemas/FraudCase"
+  /cases/{id}/decision:
+    put:
+      summary: "Record analyst decision"
+      operationId: "recordCaseDecisionCanonical"
+      security:
+        - oauth2:
+            - cases:write
+      x-rate-limit-tier: "endpoint"
+      parameters:
+        - name: "id"
+          in: "path"
+          required: true
+          schema:
+            type: "string"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/CaseDecision"
+            examples:
+              confirmedFraud:
+                value:
+                  decision: "CONFIRMED_FRAUD"
+                  reason: "Customer denied transaction and device is linked to mule cluster."
+      responses:
+        200:
+          description: "Updated"
+  /rules:
+    get:
+      summary: "List active fraud rules"
+      operationId: "listRulesCanonical"
+      security:
+        - oauth2:
+            - fraud:read
+      x-rate-limit-tier: "endpoint"
+      responses:
+        200:
+          description: "Rules"
+          content:
+            application/json:
+              schema:
+                type: "array"
+                items:
+                  $ref: "#/components/schemas/FraudRule"
+    post:
+      summary: "Create fraud rule"
+      operationId: "createRuleCanonical"
+      security:
+        - oauth2:
+            - rules:admin
+      x-rate-limit-tier: "endpoint"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/FraudRule"
+      responses:
+        201:
+          description: "Created"
+  /dashboard/metrics:
+    get:
+      summary: "Get dashboard metrics"
+      operationId: "getDashboardMetricsCanonical"
+      security:
+        - oauth2:
+            - fraud:read
+      x-rate-limit-tier: "global"
+      responses:
+        200:
+          description: "Metrics"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/DashboardMetrics"
   /api/v1/transactions:
     post:
       summary: "Submit a transaction for fraud screening"
@@ -117,6 +287,11 @@ components:
             fraud:write: "Submit transactions"
             fraud:read: "Read decisions"
             rules:admin: "Manage rules"
+            cases:write: "Record case decisions"
+    jwt:
+      type: "http"
+      scheme: "bearer"
+      bearerFormat: "JWT"
   parameters:
     TransactionId:
       name: "id"
@@ -136,6 +311,9 @@ components:
         amount:
           type: "number"
           format: "double"
+      example:
+        currency: "INR"
+        amount: 24500.0
     TransactionRequest:
       type: "object"
       required:
@@ -160,6 +338,17 @@ components:
           type: "string"
         ipAddress:
           type: "string"
+      example:
+        transactionId: "txn_100045"
+        customerId: "cust_784"
+        merchantId: "mrc_992"
+        amount:
+          currency: "INR"
+          amount: 24500.0
+        channel: "ECOMMERCE"
+        mcc: "5732"
+        deviceId: "dev_abc123"
+        ipAddress: "203.0.113.10"
     TransactionAccepted:
       type: "object"
       properties:

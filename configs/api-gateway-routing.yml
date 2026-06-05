@@ -1,21 +1,49 @@
 gateway:
   name: shieldpay-public-api
+  authentication:
+    oauth2: true
+    jwtValidation: true
+    requiredClaims: [iss, aud, exp, scope, tenant_id]
   routes:
-    - path: /api/v1/transactions
+    - path: /transactions
+      versionedPath: /api/v1/transactions
       methods: [POST]
       upstream: transaction-ingestion:8080
       auth: oauth2
+      requiredScope: fraud:write
       rateLimitPolicy: merchant-transaction-submit
-    - path: /api/v1/transactions/*/risk-score
+    - path: /transactions/{id}/risk-score
+      versionedPath: /api/v1/transactions/{id}/risk-score
       methods: [GET]
       upstream: risk-scoring:8080
       auth: oauth2
-    - path: /api/v1/cases
+      requiredScope: fraud:read
+      rateLimitPolicy: endpoint-read
+    - path: /cases
+      versionedPath: /api/v1/cases
       methods: [GET]
       upstream: case-management:8080
       auth: oauth2
-    - path: /api/v1/rules
+      requiredScope: fraud:read
+      rateLimitPolicy: analyst-read
+    - path: /cases/{id}/decision
+      versionedPath: /api/v1/cases/{id}/decision
+      methods: [PUT]
+      upstream: case-management:8080
+      auth: oauth2
+      requiredScope: cases:write
+      rateLimitPolicy: analyst-write
+    - path: /rules
+      versionedPath: /api/v1/rules
       methods: [GET, POST]
       upstream: rule-engine:8080
       auth: oauth2
       requiredScope: rules:admin
+      rateLimitPolicy: admin-low-volume
+    - path: /dashboard/metrics
+      versionedPath: /api/v1/dashboard/metrics
+      methods: [GET]
+      upstream: dashboard-api:8080
+      auth: oauth2
+      requiredScope: fraud:read
+      rateLimitPolicy: global-dashboard

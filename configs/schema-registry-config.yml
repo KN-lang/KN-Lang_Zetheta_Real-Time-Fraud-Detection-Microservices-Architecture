@@ -1,18 +1,35 @@
 schemaRegistry:
   compatibility: BACKWARD_TRANSITIVE
   mode: READWRITE
+  format: PROTOBUF
   subjects:
-    - name: shieldpay.events.TransactionEvent
-      format: PROTOBUF
-      topic: transactions.validated.v1
-    - name: shieldpay.events.EnrichedTransactionEvent
-      format: PROTOBUF
-      topic: transactions.enriched.v1
-    - name: shieldpay.events.RiskDecision
-      format: PROTOBUF
-      topic: risk.decisions.v1
+    - name: fraud.transactions.raw-value
+      topic: fraud.transactions.raw
+      message: shieldpay.events.v1.TransactionEvent
+    - name: fraud.transactions.enriched-value
+      topic: fraud.transactions.enriched
+      message: shieldpay.events.v1.EnrichedTransactionEvent
+    - name: fraud.rule.results-value
+      topic: fraud.rule.results
+      message: shieldpay.events.v1.RuleEvaluationResult
+    - name: fraud.anomaly.scores-value
+      topic: fraud.anomaly.scores
+      message: shieldpay.events.v1.AnomalyScore
+    - name: fraud.graph.signals-value
+      topic: fraud.graph.signals
+      message: shieldpay.events.v1.GraphSignals
+    - name: fraud.risk.decisions-value
+      topic: fraud.risk.decisions
+      message: shieldpay.events.v1.RiskDecision
+    - name: fraud.notifications-value
+      topic: fraud.notifications
+      message: shieldpay.events.v1.NotificationRequest
+    - name: fraud.audit.events-value
+      topic: fraud.audit.events
+      message: shieldpay.events.v1.AuditEvent
   governance:
     requireOwner: true
     requireDescription: true
     rejectBreakingChanges: true
     piiClassificationRequired: true
+    ownerTeam: platform-architecture

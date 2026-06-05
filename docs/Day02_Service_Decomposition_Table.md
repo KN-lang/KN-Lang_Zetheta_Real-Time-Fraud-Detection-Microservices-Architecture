@@ -13,5 +13,25 @@
 | notification | Sends customer, merchant, and operations notifications through approved channels. | PostgreSQL | risk.decisions.v1, cases.events.v1 | notifications.requests.v1 |
 | audit-compliance | Stores immutable audit records, evidence bundles, and compliance reports. | WORM object store + PostgreSQL | All governed topics | audit.events.v1 |
 
-    ## Sizing Boundary
-    The design uses ten services, satisfying the Project 1C requirement for 8-12 services while keeping deployable boundaries aligned to business capabilities.
+## Sizing Boundary
+The design uses ten services, satisfying the Project 1C requirement for 8-12 services while keeping deployable boundaries aligned to business capabilities.
+
+## Team Ownership Model
+
+| Team | Services Owned | Operational Responsibility |
+| --- | --- | --- |
+| Payments Platform | `transaction-ingestion` | API intake, idempotency, transaction validation, Kafka publishing. |
+| Customer Intelligence | `customer-profile`, `feature-store` | Customer/account/device profile features and online/offline feature parity. |
+| Fraud Strategy Engineering | `rule-engine`, rule configuration | Rule lifecycle, simulation, A/B testing, precision monitoring. |
+| ML Risk Engineering | `anomaly-detection` | Model serving, champion-challenger, drift monitoring, retraining evidence. |
+| Graph Intelligence | `graph-analysis` | Neo4j schema, topology matching, centrality/community analysis. |
+| Decisioning Platform | `risk-scoring` | Signal aggregation, decision policy, decision explainability, latency SLA. |
+| Fraud Operations | `case-management`, `notification` | Analyst workflow, customer/merchant notifications, queue SLA. |
+| Governance Platform | `audit-compliance` | Immutable audit events, evidence bundles, compliance reporting. |
+
+## DDD Boundary Rules
+
+- Each team owns its service schema and publishes facts through Kafka.
+- Shared database access is prohibited.
+- Synchronous gRPC calls are limited to low-latency lookups; state changes use events.
+- Service APIs reflect business capabilities rather than technical layers.

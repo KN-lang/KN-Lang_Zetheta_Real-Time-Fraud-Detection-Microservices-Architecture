@@ -38,10 +38,21 @@ The principal flow is:
 | Delivery and final material | [Day14_CICD_Pipeline_Design.md](Day14_CICD_Pipeline_Design.md), [ci.yml](../.github/workflows/ci.yml), [Day14_Multi_Region_Deployment_Topology.md](Day14_Multi_Region_Deployment_Topology.md), [day14_deployment_topology.mmd](../diagrams/day14_deployment_topology.mmd), [Day14_Disaster_Recovery_Plan.md](Day14_Disaster_Recovery_Plan.md), [Board_Presentation_Outline.md](../presentation/Board_Presentation_Outline.md), [video_script.md](../presentation/video_script.md), [AI_USAGE.md](AI_USAGE.md), [ERROR_DETECTION.md](ERROR_DETECTION.md) |
 
 ## Kafka Topic Topology
-The event backbone contains eleven topics, including `transactions.raw.v1`, `transactions.validated.v1`, `transactions.enriched.v1`, `rules.evaluated.v1`, `ml.anomaly-scores.v1`, `graph.signals.v1`, `risk.decisions.v1`, `cases.events.v1`, `notifications.requests.v1`, `audit.events.v1`, and `fraud.dlq.v1`.
+The canonical Project 1C backbone topics are `fraud.transactions.raw`, `fraud.transactions.enriched`, `fraud.rule.results`, `fraud.anomaly.scores`, `fraud.graph.signals`, `fraud.risk.decisions`, `fraud.notifications`, and `fraud.audit.events`. Supporting topics include `fraud.transactions.validated`, `fraud.cases.events`, `fraud.retry.*`, and `fraud.dlq`.
+
+Local Kafka deployment instructions are available in [KAFKA_LOCAL_DEPLOYMENT.md](KAFKA_LOCAL_DEPLOYMENT.md), backed by [docker-compose.yml](../docker-compose.yml).
 
 ## Compliance Position
 The architecture narrows PCI DSS scope by keeping PAN and sensitive authentication data out of analytical services. It supports RBI-style operational resilience, auditability, incident response, customer notification, and data residency expectations. GDPR considerations are addressed through purpose limitation, retention control, minimization, and auditable access to personal data.
 
 ## Operational Readiness
-The repository includes Prometheus alert rules, Grafana dashboard specifications, OpenTelemetry tracing, structured logging standards, P1/P2 runbooks, CI/CD design, Kubernetes samples, and multi-region disaster recovery material. These artifacts make the design reviewable as an architecture submission and give a clear path toward production implementation.
+The repository includes Prometheus alert rules, Grafana dashboard specifications, OpenTelemetry tracing, structured logging standards, P1-P4 runbooks, CI/CD design, Kubernetes samples, and multi-region disaster recovery material. These artifacts make the design reviewable as an architecture submission and give a clear path toward production implementation.
+
+## Executive Review Additions
+
+- [EVALUATION_TRACEABILITY_MATRIX.md](EVALUATION_TRACEABILITY_MATRIX.md) maps every requirement to evidence.
+- [BOARD_DEFENSE_GUIDE.md](BOARD_DEFENSE_GUIDE.md) prepares CTO, CRO, VP Engineering, Compliance, and CFO review answers.
+- [CASE_STUDY_MAPPING.md](CASE_STUDY_MAPPING.md) maps architecture controls to Target, Cosmos Bank, Netflix, and Wirecard lessons.
+- [COMPLIANCE_MATRIX.md](COMPLIANCE_MATRIX.md) maps PCI DSS, RBI, and GDPR controls.
+- [COST_MODEL.md](COST_MODEL.md) addresses cost and build-vs-buy tradeoffs.
+- [SUBMISSION_READINESS_REPORT.md](SUBMISSION_READINESS_REPORT.md) scores final readiness by reviewer lens.

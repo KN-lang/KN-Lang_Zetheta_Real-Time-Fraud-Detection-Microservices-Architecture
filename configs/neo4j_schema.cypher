@@ -1,7 +1,12 @@
+CREATE CONSTRAINT card_token IF NOT EXISTS FOR (c:Card) REQUIRE c.card_token IS UNIQUE;
 CREATE CONSTRAINT customer_id IF NOT EXISTS FOR (c:Customer) REQUIRE c.customer_id IS UNIQUE;
-CREATE CONSTRAINT account_id IF NOT EXISTS FOR (a:Account) REQUIRE a.account_id IS UNIQUE;
 CREATE CONSTRAINT device_id IF NOT EXISTS FOR (d:Device) REQUIRE d.device_id IS UNIQUE;
-CREATE CONSTRAINT ip_id IF NOT EXISTS FOR (i:IPAddress) REQUIRE i.ip_address IS UNIQUE;
+CREATE CONSTRAINT ip_address IF NOT EXISTS FOR (i:IP) REQUIRE i.ip_address IS UNIQUE;
+CREATE CONSTRAINT phone_hash IF NOT EXISTS FOR (p:Phone) REQUIRE p.phone_hash IS UNIQUE;
+CREATE CONSTRAINT email_hash IF NOT EXISTS FOR (e:Email) REQUIRE e.email_hash IS UNIQUE;
 CREATE CONSTRAINT merchant_id IF NOT EXISTS FOR (m:Merchant) REQUIRE m.merchant_id IS UNIQUE;
+CREATE CONSTRAINT account_id IF NOT EXISTS FOR (a:Account) REQUIRE a.account_id IS UNIQUE;
+CREATE CONSTRAINT address_hash IF NOT EXISTS FOR (a:Address) REQUIRE a.address_hash IS UNIQUE;
 CREATE CONSTRAINT tx_id IF NOT EXISTS FOR (t:Transaction) REQUIRE t.transaction_id IS UNIQUE;
 CREATE INDEX transaction_time IF NOT EXISTS FOR (t:Transaction) ON (t.occurred_at);
+CREATE INDEX transaction_decision IF NOT EXISTS FOR (t:Transaction) ON (t.decision);

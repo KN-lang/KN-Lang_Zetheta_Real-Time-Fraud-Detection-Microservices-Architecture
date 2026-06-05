@@ -78,9 +78,12 @@ Core platform services:
 Supporting platform components:
 
 * Apache Kafka
+* Schema Registry
 * PostgreSQL
 * Redis
 * Neo4j
+* Elasticsearch
+* TimescaleDB
 * Istio Service Mesh
 * Kong API Gateway
 * Prometheus
@@ -165,7 +168,7 @@ Contains daily work logs documenting the evolution of the architecture across th
 | Event Streaming | Apache Kafka             |
 | APIs            | OpenAPI 3.0, gRPC        |
 | Serialization   | Protobuf                 |
-| Databases       | PostgreSQL, Redis, Neo4j |
+| Databases       | PostgreSQL, Redis, Neo4j, Elasticsearch, TimescaleDB |
 | Infrastructure  | Docker, Kubernetes       |
 | Service Mesh    | Istio                    |
 | API Gateway     | Kong                     |
@@ -199,6 +202,17 @@ docs/EVALUATION_TRACEABILITY_MATRIX.md
 ```
 
 This maps every project requirement to the corresponding deliverable.
+
+Also review:
+
+```text
+docs/BOARD_DEFENSE_GUIDE.md
+docs/CASE_STUDY_MAPPING.md
+docs/COMPLIANCE_MATRIX.md
+docs/COST_MODEL.md
+docs/SUBMISSION_READINESS_REPORT.md
+docs/KAFKA_LOCAL_DEPLOYMENT.md
+```
 
 ### Step 3
 
@@ -250,6 +264,11 @@ samples/
 * [x] Disaster Recovery Plan
 * [x] Presentation Package
 * [x] Evaluation Traceability Matrix
+* [x] Local Kafka Docker Compose
+* [x] Compliance Matrix
+* [x] Cost Model
+* [x] Board Defense Guide
+* [x] Submission Readiness Report
 
 ---
 

@@ -1,20 +1,93 @@
 _format_version: "3.0"
+
+plugins:
+  - name: correlation-id
+    config:
+      header_name: X-Correlation-ID
+      generator: uuid
+      echo_downstream: true
+  - name: request-size-limiting
+    config:
+      allowed_payload_size: 1
+
 services:
   - name: transaction-ingestion
     url: http://transaction-ingestion:8080
     routes:
       - name: submit-transaction
-        paths: [/api/v1/transactions]
+        paths:
+          - /transactions
+          - /api/v1/transactions
         methods: [POST]
+        strip_path: false
     plugins:
+      - name: oauth2
+        config:
+          scopes: ["fraud:write"]
+          mandatory_scope: true
+          enable_client_credentials: true
+      - name: jwt
+        config:
+          claims_to_verify: [exp]
       - name: rate-limiting
         config:
           minute: 6000
           policy: local
-      - name: correlation-id
+          fault_tolerant: true
+
+  - name: risk-scoring
+    url: http://risk-scoring:8080
+    routes:
+      - name: risk-score
+        paths:
+          - /transactions/.*/risk-score
+          - /api/v1/transactions/.*/risk-score
+        methods: [GET]
+        strip_path: false
+    plugins:
+      - name: oauth2
+        config:
+          scopes: ["fraud:read"]
+          mandatory_scope: true
+      - name: rate-limiting
+        config:
+          minute: 3000
+          policy: local
+
   - name: case-management
     url: http://case-management:8080
     routes:
       - name: cases
-        paths: [/api/v1/cases]
+        paths:
+          - /cases
+          - /api/v1/cases
         methods: [GET, PUT]
+        strip_path: false
+    plugins:
+      - name: oauth2
+        config:
+          scopes: ["fraud:read", "cases:write"]
+          mandatory_scope: true
+      - name: rate-limiting
+        config:
+          minute: 1200
+          policy: local
+
+  - name: rule-engine
+    url: http://rule-engine:8080
+    routes:
+      - name: rules
+        paths:
+          - /rules
+          - /api/v1/rules
+        methods: [GET, POST]
+        strip_path: false
+    plugins:
+      - name: oauth2
+        config:
+          scopes: ["rules:admin"]
+          mandatory_scope: true
+      - name: rate-limiting
+        config:
+          minute: 300
+          policy: local
