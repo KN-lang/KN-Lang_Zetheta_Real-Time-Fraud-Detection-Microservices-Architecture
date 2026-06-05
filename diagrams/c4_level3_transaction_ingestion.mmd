@@ -1,0 +1,6 @@
+flowchart LR
+  C0[REST Controller] --> C1[Idempotency Manager]
+  C1[Idempotency Manager] --> C2[Schema Validator]
+  C2[Schema Validator] --> C3[Kafka Producer]
+  C3[Kafka Producer] --> C4[Audit Publisher]
+  C4[Audit Publisher] --> K[(Kafka)]

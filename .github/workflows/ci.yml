@@ -1,0 +1,21 @@
+name: ci
+on:
+  push:
+  pull_request:
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - run: python -m json.tool configs/rule-schema.json > /tmp/rule-schema.json
+      - run: python -m pip install pyyaml
+      - run: |
+          python - <<'PY'
+          import yaml, pathlib
+          for p in list(pathlib.Path('configs').glob('*.yml')) + list(pathlib.Path('api-specs').glob('*.yml')) + list(pathlib.Path('samples').glob('**/*.yml')):
+              list(yaml.safe_load_all(p.read_text()))
+          PY
+      - run: pytest

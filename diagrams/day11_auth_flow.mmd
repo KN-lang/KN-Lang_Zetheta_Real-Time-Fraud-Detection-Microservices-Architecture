@@ -1,0 +1,12 @@
+sequenceDiagram
+  participant Client
+  participant IdP
+  participant Gateway
+  participant Service
+  Client->>IdP: Request token
+  IdP-->>Client: JWT access token
+  Client->>Gateway: API request with bearer token
+  Gateway->>Gateway: Validate issuer, audience, scope
+  Gateway->>Service: Forward with correlation ID
+  Service-->>Gateway: Response
+  Gateway-->>Client: Response

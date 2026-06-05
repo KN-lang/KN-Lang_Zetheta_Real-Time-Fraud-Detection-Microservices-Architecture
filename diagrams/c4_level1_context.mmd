@@ -1,0 +1,9 @@
+flowchart TB
+  Customer[Customer] --> Merchant[Merchant App / POS]
+  Analyst[Fraud Analyst] --> Platform[ShieldPay Real-Time Fraud Detection Platform]
+  Merchant --> Gateway[API Gateway]
+  Gateway --> Platform
+  Platform --> Core[Core Banking and Payment Switch]
+  Platform --> KYC[KYC / Sanctions Providers]
+  Platform --> Notify[SMS Email Push Providers]
+  Platform --> SIEM[SIEM and Regulatory Reporting]

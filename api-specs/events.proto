@@ -1,0 +1,14 @@
+syntax = "proto3";
+package shieldpay.events.v1;
+
+message Money { string currency = 1; double amount = 2; }
+message EventEnvelope { string event_id = 1; string event_type = 2; string event_version = 3; string occurred_at = 4; string correlation_id = 5; string source_service = 6; }
+message TransactionEvent { EventEnvelope envelope = 1; string transaction_id = 2; string customer_id = 3; string account_id = 4; string merchant_id = 5; Money amount = 6; string channel = 7; string mcc = 8; string device_id = 9; string ip_address = 10; string country = 11; }
+message EnrichedTransactionEvent { EventEnvelope envelope = 1; TransactionEvent transaction = 2; map<string, double> numeric_features = 3; map<string, string> categorical_features = 4; repeated string watchlist_hits = 5; }
+message RuleEvaluationResult { EventEnvelope envelope = 1; string transaction_id = 2; repeated string matched_rule_ids = 3; double rule_score = 4; repeated string explanations = 5; }
+message AnomalyScore { EventEnvelope envelope = 1; string transaction_id = 2; string model_name = 3; string model_version = 4; double score = 5; repeated string top_features = 6; }
+message GraphSignals { EventEnvelope envelope = 1; string transaction_id = 2; double graph_risk_score = 3; repeated string suspicious_paths = 4; repeated string connected_entities = 5; }
+message RiskDecision { EventEnvelope envelope = 1; string transaction_id = 2; string decision = 3; double risk_score = 4; repeated string reasons = 5; string case_id = 6; }
+message CaseEvent { EventEnvelope envelope = 1; string case_id = 2; string transaction_id = 3; string status = 4; string assigned_team = 5; repeated string evidence_event_ids = 6; }
+message NotificationRequest { EventEnvelope envelope = 1; string notification_id = 2; string recipient_type = 3; string recipient_id = 4; string channel = 5; string template_id = 6; map<string, string> parameters = 7; }
+message AuditEvent { EventEnvelope envelope = 1; string actor = 2; string action = 3; string resource_type = 4; string resource_id = 5; string outcome = 6; map<string, string> metadata = 7; }

@@ -1,0 +1,18 @@
+schemaRegistry:
+  compatibility: BACKWARD_TRANSITIVE
+  mode: READWRITE
+  subjects:
+    - name: shieldpay.events.TransactionEvent
+      format: PROTOBUF
+      topic: transactions.validated.v1
+    - name: shieldpay.events.EnrichedTransactionEvent
+      format: PROTOBUF
+      topic: transactions.enriched.v1
+    - name: shieldpay.events.RiskDecision
+      format: PROTOBUF
+      topic: risk.decisions.v1
+  governance:
+    requireOwner: true
+    requireDescription: true
+    rejectBreakingChanges: true
+    piiClassificationRequired: true

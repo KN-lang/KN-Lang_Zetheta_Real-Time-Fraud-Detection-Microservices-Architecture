@@ -1,0 +1,10 @@
+flowchart TB
+  DNS[Global DNS / Traffic Manager] --> R1[Region A Kubernetes]
+  DNS --> R2[Region B Kubernetes]
+  R1 --> K1[(Kafka A)]
+  R2 --> K2[(Kafka B)]
+  K1 <--> K2
+  R1 --> DB1[(Regional Datastores)]
+  R2 --> DB2[(Regional Datastores)]
+  DB1 --> Obj[(Immutable Cross-Region Evidence Store)]
+  DB2 --> Obj

@@ -1,0 +1,261 @@
+rules:
+  - rule_id: "FR-001"
+    name: "Velocity rule 1"
+    category: "velocity"
+    severity: "high"
+    enabled: true
+    conditions:
+      - field: "velocity.signal_1"
+        operator: "greater_than"
+        value: 3
+    actions:
+      - add_score
+      - review
+    score: 28
+  - rule_id: "FR-002"
+    name: "Velocity rule 2"
+    category: "velocity"
+    severity: "critical"
+    enabled: true
+    conditions:
+      - field: "velocity.signal_2"
+        operator: "greater_than"
+        value: 4
+    actions:
+      - add_score
+      - review
+    score: 31
+  - rule_id: "FR-003"
+    name: "Velocity rule 3"
+    category: "velocity"
+    severity: "medium"
+    enabled: true
+    conditions:
+      - field: "velocity.signal_3"
+        operator: "greater_than"
+        value: 5
+    actions:
+      - add_score
+      - review
+    score: 34
+  - rule_id: "FR-004"
+    name: "Velocity rule 4"
+    category: "velocity"
+    severity: "high"
+    enabled: true
+    conditions:
+      - field: "velocity.signal_4"
+        operator: "greater_than"
+        value: 6
+    actions:
+      - add_score
+      - block
+    score: 37
+  - rule_id: "FR-005"
+    name: "Velocity rule 5"
+    category: "velocity"
+    severity: "critical"
+    enabled: true
+    conditions:
+      - field: "velocity.signal_5"
+        operator: "greater_than"
+        value: 7
+    actions:
+      - add_score
+      - review
+    score: 40
+  - rule_id: "FR-006"
+    name: "Amount rule 1"
+    category: "amount"
+    severity: "medium"
+    enabled: true
+    conditions:
+      - field: "amount.signal_1"
+        operator: "greater_than"
+        value: 3
+    actions:
+      - add_score
+      - review
+    score: 43
+  - rule_id: "FR-007"
+    name: "Amount rule 2"
+    category: "amount"
+    severity: "high"
+    enabled: true
+    conditions:
+      - field: "amount.signal_2"
+        operator: "greater_than"
+        value: 4
+    actions:
+      - add_score
+      - review
+    score: 46
+  - rule_id: "FR-008"
+    name: "Amount rule 3"
+    category: "amount"
+    severity: "critical"
+    enabled: true
+    conditions:
+      - field: "amount.signal_3"
+        operator: "greater_than"
+        value: 5
+    actions:
+      - add_score
+      - block
+    score: 49
+  - rule_id: "FR-009"
+    name: "Geographic rule 1"
+    category: "geographic"
+    severity: "medium"
+    enabled: true
+    conditions:
+      - field: "geographic.signal_1"
+        operator: "greater_than"
+        value: 3
+    actions:
+      - add_score
+      - review
+    score: 52
+  - rule_id: "FR-010"
+    name: "Geographic rule 2"
+    category: "geographic"
+    severity: "high"
+    enabled: true
+    conditions:
+      - field: "geographic.signal_2"
+        operator: "greater_than"
+        value: 4
+    actions:
+      - add_score
+      - review
+    score: 55
+  - rule_id: "FR-011"
+    name: "Geographic rule 3"
+    category: "geographic"
+    severity: "critical"
+    enabled: true
+    conditions:
+      - field: "geographic.signal_3"
+        operator: "greater_than"
+        value: 5
+    actions:
+      - add_score
+      - review
+    score: 58
+  - rule_id: "FR-012"
+    name: "Mcc rule 1"
+    category: "mcc"
+    severity: "medium"
+    enabled: true
+    conditions:
+      - field: "mcc.signal_1"
+        operator: "greater_than"
+        value: 3
+    actions:
+      - add_score
+      - block
+    score: 61
+  - rule_id: "FR-013"
+    name: "Mcc rule 2"
+    category: "mcc"
+    severity: "high"
+    enabled: true
+    conditions:
+      - field: "mcc.signal_2"
+        operator: "greater_than"
+        value: 4
+    actions:
+      - add_score
+      - review
+    score: 64
+  - rule_id: "FR-014"
+    name: "Mcc rule 3"
+    category: "mcc"
+    severity: "critical"
+    enabled: true
+    conditions:
+      - field: "mcc.signal_3"
+        operator: "greater_than"
+        value: 5
+    actions:
+      - add_score
+      - review
+    score: 67
+  - rule_id: "FR-015"
+    name: "Watchlist rule 1"
+    category: "watchlist"
+    severity: "medium"
+    enabled: true
+    conditions:
+      - field: "watchlist.signal_1"
+        operator: "greater_than"
+        value: 3
+    actions:
+      - add_score
+      - review
+    score: 70
+  - rule_id: "FR-016"
+    name: "Watchlist rule 2"
+    category: "watchlist"
+    severity: "high"
+    enabled: true
+    conditions:
+      - field: "watchlist.signal_2"
+        operator: "greater_than"
+        value: 4
+    actions:
+      - add_score
+      - block
+    score: 73
+  - rule_id: "FR-017"
+    name: "Behavioural rule 1"
+    category: "behavioural"
+    severity: "critical"
+    enabled: true
+    conditions:
+      - field: "behavioural.signal_1"
+        operator: "greater_than"
+        value: 3
+    actions:
+      - add_score
+      - review
+    score: 76
+  - rule_id: "FR-018"
+    name: "Behavioural rule 2"
+    category: "behavioural"
+    severity: "medium"
+    enabled: true
+    conditions:
+      - field: "behavioural.signal_2"
+        operator: "greater_than"
+        value: 4
+    actions:
+      - add_score
+      - review
+    score: 79
+  - rule_id: "FR-019"
+    name: "Device Network rule 1"
+    category: "device_network"
+    severity: "high"
+    enabled: true
+    conditions:
+      - field: "device_network.signal_1"
+        operator: "greater_than"
+        value: 3
+    actions:
+      - add_score
+      - review
+    score: 82
+  - rule_id: "FR-020"
+    name: "Device Network rule 2"
+    category: "device_network"
+    severity: "critical"
+    enabled: true
+    conditions:
+      - field: "device_network.signal_2"
+        operator: "greater_than"
+        value: 4
+    actions:
+      - add_score
+      - block
+    score: 85

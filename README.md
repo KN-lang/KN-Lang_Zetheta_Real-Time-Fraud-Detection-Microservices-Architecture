@@ -1,128 +1,62 @@
-# Real-Time Fraud Detection Microservices Architecture
+# SWE-2C_FraudDetection_KshitijChauhan
 
-Local Phase 1 prototype for a fintech fraud detection platform. It simulates transaction streams, applies rule checks, statistical anomaly detection, graph relationship analysis, risk scoring, and fraud case creation.
+    ## Executive Summary
+    This repository presents a GitHub-ready architecture submission for Project 1C: Real-Time Fraud Detection Microservices Architecture. It designs ShieldPay, an event-driven fraud detection platform for financial transactions using Apache Kafka, microservices, rule evaluation, ML anomaly detection, Neo4j graph analysis, risk scoring, case management, audit, observability, security, and Kubernetes deployment patterns.
 
-This is a lightweight Python foundation, not a production distributed system.
+    ## Problem Statement
+    Legacy fraud systems are often monolithic, batch-oriented, difficult to tune, and slow to react to fraud rings, mule accounts, account takeover, and high-velocity digital payment abuse. ShieldPay replaces that model with real-time decisioning and explainable fraud evidence.
 
-## Business Context
+    ## Repository Structure
+    - `docs/` - daily architecture documents, runbooks, compliance mappings, and final master document.
+    - `diagrams/` - Mermaid C4, event storming, CQRS, ML, auth, and deployment diagrams.
+    - `api-specs/` - OpenAPI external REST contract and Protobuf internal/event contracts.
+    - `configs/` - Kafka schema registry, rules, Neo4j Cypher, Istio, gateway, observability, and alert configs.
+    - `samples/` - Docker and Kubernetes deployment examples.
+    - `presentation/` - board presentation outline and walkthrough script.
+    - `daily-commits/` - daily work logs for Day 01 through Day 15.
 
-Modern payment ecosystems process millions of transactions across UPI, cards, wallets, NEFT, RTGS, and digital channels.
+    ## Architecture Overview
+    The architecture uses ten services: transaction-ingestion, customer-profile, feature-store, rule-engine, anomaly-detection, graph-analysis, risk-scoring, case-management, notification, audit-compliance. Kafka topics connect ingestion, enrichment, rule evaluation, ML scoring, graph analysis, risk decisions, cases, notifications, and audit events. Istio provides mTLS and authorization policy. Kong/API gateway provides external routing, OAuth enforcement, and rate limiting.
 
-Fraudsters exploit stolen credentials, mule accounts, synthetic identities, shared devices, bot networks, and compromised payment instruments to perform unauthorized transactions.
+    ## Key Deliverables
+    | Day | Primary Work Log | Status |
+| --- | --- | --- |
+| Day 01 | `daily-commits/Day01_Work_Log.md` | Complete |
+| Day 02 | `daily-commits/Day02_Work_Log.md` | Complete |
+| Day 03 | `daily-commits/Day03_Work_Log.md` | Complete |
+| Day 04 | `daily-commits/Day04_Work_Log.md` | Complete |
+| Day 05 | `daily-commits/Day05_Work_Log.md` | Complete |
+| Day 06 | `daily-commits/Day06_Work_Log.md` | Complete |
+| Day 07 | `daily-commits/Day07_Work_Log.md` | Complete |
+| Day 08 | `daily-commits/Day08_Work_Log.md` | Complete |
+| Day 09 | `daily-commits/Day09_Work_Log.md` | Complete |
+| Day 10 | `daily-commits/Day10_Work_Log.md` | Complete |
+| Day 11 | `daily-commits/Day11_Work_Log.md` | Complete |
+| Day 12 | `daily-commits/Day12_Work_Log.md` | Complete |
+| Day 13 | `daily-commits/Day13_Work_Log.md` | Complete |
+| Day 14 | `daily-commits/Day14_Work_Log.md` | Complete |
+| Day 15 | `daily-commits/Day15_Work_Log.md` | Complete |
 
-Financial institutions require real-time fraud detection systems that can analyze transaction behavior, identify suspicious patterns, assess risk, and initiate intervention before financial losses occur.
+    ## How to Review the Project
+    1. Start with `docs/Master_Architecture_Document.md`.
+    2. Review `diagrams/c4_level1_context.mmd`, `diagrams/c4_level2_container_final.mmd`, and the Level 3 service diagrams.
+    3. Inspect `api-specs/openapi.yml`, `api-specs/internal-services.proto`, and `api-specs/events.proto`.
+    4. Review `configs/sample-rules.yml`, `configs/fraud_detection_queries.cypher`, Istio configs, Prometheus alerts, and Kubernetes samples.
+    5. Use `presentation/video_script.md` for the 5-8 minute walkthrough.
 
-This project demonstrates a fraud detection platform capable of combining rule-based detection, statistical anomaly analysis, graph relationship intelligence, and risk scoring to identify suspicious activities in near real time.
+    ## Technology Stack
+    Apache Kafka, Protobuf, OpenAPI 3.0, PostgreSQL, Redis, Neo4j, Python, Kubernetes, Docker, Istio, Kong, Prometheus, Grafana, OpenTelemetry, and GitHub Actions.
 
-## Architecture
+    ## Submission Checklist
+    - [x] 8-12 microservices defined.
+    - [x] Kafka event backbone with 8+ topics.
+    - [x] C4 Level 1, Level 2, and four Level 3 diagrams.
+    - [x] External OpenAPI and internal gRPC contracts.
+    - [x] Rule schema and 20 sample fraud rules.
+    - [x] ML serving and feature store design.
+    - [x] Neo4j schema and 5+ Cypher fraud queries.
+    - [x] Service mesh, security, observability, runbooks, CI/CD, Kubernetes, DR, and presentation material.
 
-- `simulation`: deterministic synthetic transactions and relationship data
-- `rules`: configurable rule engine backed by `config/rules.yaml`
-- `anomaly`: statistical amount outlier detection
-- `graph`: NetworkX relationship graph and entity-risk alerts
-- `scoring`: weighted risk score aggregation
-- `cases`: case creation for review/block decisions
-- `reports`: CSV, JSON, and audit report writing
-- `events`: Kafka-style in-process EventBus, event envelopes, and JSONL event logging
-- `cli`: Typer command interface
-
-The package layout is microservices-inspired so each domain can later become its own event-driven service.
-
-## Features
-
-| Capability | Status |
-|------------|---------|
-| Transaction Generation | ✅ |
-| Rule-Based Detection | ✅ |
-| Statistical Anomaly Detection | ✅ |
-| Graph Relationship Analysis | ✅ |
-| Risk Scoring | ✅ |
-| Fraud Case Generation | ✅ |
-| Event-Driven Pipeline Simulation | ✅ |
-| Kafka Target Architecture | ✅ |
-| OpenAPI Contract | ✅ |
-| Architecture Documentation | ✅ |
-| Automated Tests | ✅ |
-
-
-## Setup
-
-```bash
-python -m venv .venv
-source .venv/bin/activate
-pip install -r requirements.txt
-pip install -e .
-```
-
-## Commands
-
-```bash
-python -m fraud_platform generate-data --records 1000
-python -m fraud_platform score-transactions --transactions data/generated/transactions.csv --output data/output
-python -m fraud_platform simulate-attack --attack-type velocity
-python -m fraud_platform run-pipeline --records 1000
-python -m fraud_platform run-event-pipeline --records 1000
-pytest
-```
-
-## Why Kafka Is Designed But Not Deployed Locally
-
-Kafka is the target production event backbone for the platform, but the local prototype intentionally does not require a Kafka broker, Docker, or distributed infrastructure. Instead, the project includes an in-process `EventBus` that simulates topic-based communication with the same service boundaries used in the production design.
-
-The local EventBus publishes events to topics such as `transaction.events`, `rule.hit.events`, `anomaly.alert.events`, `graph.alert.events`, `risk.score.events`, `fraud.case.events`, and `audit.events`. It also writes `data/output/event_log.jsonl` so the event flow can be inspected and replay concepts can be discussed.
-
-This keeps the prototype easy to run, validates the event-driven fraud detection logic, and gives a straightforward migration path to Kafka topics later. The event schemas and event envelope model define the contract that a production Kafka deployment would use.
-
-## Generated Data
-
-`data/generated/` contains:
-
-- `transactions.csv`
-- `customers.csv`
-- `accounts.csv`
-- `devices.csv`
-- `merchants.csv`
-- `relationships.csv`
-
-The generator intentionally includes high-amount transactions, velocity fraud, failed attempts, unusual countries, new-device high-value transactions, merchant bursts, mule accounts, shared devices, shared IPs, and round-amount transfers.
-
-## Output Reports
-
-`data/output/` contains:
-
-- `risk_scores.csv`
-- `fraud_cases.csv`
-- `rule_hits.csv`
-- `graph_alerts.csv`
-- `anomaly_alerts.csv`
-- `summary.json`
-- `event_log.jsonl`
-- `event_pipeline_summary.json`
-- `audit_log.csv`
-
-## Sample Output
-
-`summary.json` includes total transactions, decision counts, alert counts, case counts, average risk score, and generation timestamp.
-
-Decisions:
-
-- `APPROVE`: risk score 0-39
-- `REVIEW`: risk score 40-69
-- `BLOCK`: risk score 70-100
-
-## Current Limitations
-
-- Local batch and in-process event simulation only
-- No deployed Kafka broker yet
-- No persistent database
-- No model registry or online ML serving
-- Graph analysis uses in-memory NetworkX
-- Rules are intentionally simple for assignment clarity
-
-## Roadmap
-
-1. Add Kafka topic contracts and event schemas.
-2. Serve trained ML models behind a scoring API.
-3. Move graph relationships into Neo4j or another graph store.
-4. Split modules into deployable microservices.
-5. Add observability, replay, and operational controls.
+    ## Contact / Author
+    Kshitij Chauhan  
+    Repository name: `SWE-2C_FraudDetection_KshitijChauhan`

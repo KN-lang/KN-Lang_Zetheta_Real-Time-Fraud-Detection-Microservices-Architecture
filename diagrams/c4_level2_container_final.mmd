@@ -1,0 +1,27 @@
+flowchart LR
+  subgraph Edge
+    Client[Merchant / Channel Client] --> Kong[API Gateway]
+  end
+  subgraph Mesh[Istio Service Mesh]
+    Kong --> TI[transaction-ingestion]
+    TI --> Kafka[(Apache Kafka)]
+    Kafka --> CP[customer-profile]
+    CP --> FS[feature-store]
+    Kafka --> RE[rule-engine]
+    Kafka --> AD[anomaly-detection]
+    Kafka --> GA[graph-analysis]
+    RE --> Kafka
+    AD --> Kafka
+    GA --> Kafka
+    Kafka --> RS[risk-scoring]
+    RS --> Kafka
+    Kafka --> CM[case-management]
+    Kafka --> NT[notification]
+    Kafka --> AU[audit-compliance]
+  end
+  CP --> PG1[(PostgreSQL)]
+  FS --> Redis[(Redis Online Store)]
+  FS --> Lake[(Offline Feature Lake)]
+  GA --> Neo[(Neo4j)]
+  CM --> PG2[(Case DB)]
+  AU --> WORM[(Immutable Evidence Store)]

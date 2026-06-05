@@ -1,0 +1,86 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "ShieldPay Fraud Rule",
+  "type": "object",
+  "required": [
+    "rule_id",
+    "name",
+    "category",
+    "severity",
+    "enabled",
+    "conditions",
+    "actions"
+  ],
+  "properties": {
+    "rule_id": {
+      "type": "string",
+      "pattern": "^FR-[0-9]{3}$"
+    },
+    "name": {
+      "type": "string"
+    },
+    "category": {
+      "type": "string",
+      "enum": [
+        "velocity",
+        "amount",
+        "geographic",
+        "mcc",
+        "watchlist",
+        "behavioural",
+        "device_network"
+      ]
+    },
+    "severity": {
+      "type": "string",
+      "enum": [
+        "low",
+        "medium",
+        "high",
+        "critical"
+      ]
+    },
+    "enabled": {
+      "type": "boolean"
+    },
+    "conditions": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": [
+          "field",
+          "operator",
+          "value"
+        ],
+        "properties": {
+          "field": {
+            "type": "string"
+          },
+          "operator": {
+            "type": "string"
+          },
+          "value": {}
+        }
+      }
+    },
+    "actions": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "enum": [
+          "add_score",
+          "review",
+          "block",
+          "step_up",
+          "notify",
+          "create_case"
+        ]
+      }
+    },
+    "score": {
+      "type": "number",
+      "minimum": 0,
+      "maximum": 100
+    }
+  }
+}

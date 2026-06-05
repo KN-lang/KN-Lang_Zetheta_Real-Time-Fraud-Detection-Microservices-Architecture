@@ -1,0 +1,8 @@
+flowchart LR
+  Kafka[(transactions.enriched.v1)] --> AD[anomaly-detection]
+  AD --> FS[feature-store gRPC]
+  FS --> Redis[(Online Redis)]
+  FS --> Lake[(Offline Feature Lake)]
+  AD --> Registry[Model Registry]
+  AD --> Scores[(ml.anomaly-scores.v1)]
+  AD --> Monitor[Drift and Performance Monitor]

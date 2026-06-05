@@ -1,0 +1,10 @@
+stateDiagram-v2
+  [*] --> Draft
+  Draft --> Simulation
+  Simulation --> PeerReview
+  PeerReview --> Approved
+  Approved --> Canary
+  Canary --> Active
+  Active --> Retired
+  Canary --> RolledBack
+  Active --> RolledBack

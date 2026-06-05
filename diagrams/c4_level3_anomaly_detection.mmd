@@ -1,0 +1,6 @@
+flowchart LR
+  C0[Feature Client] --> C1[Model Router]
+  C1[Model Router] --> C2[Inference Runtime]
+  C2[Inference Runtime] --> C3[Drift Sampler]
+  C3[Drift Sampler] --> C4[Prediction Publisher]
+  C4[Prediction Publisher] --> K[(Kafka)]

@@ -1,0 +1,20 @@
+flowchart LR
+  A[Transaction Initiated] --> B[Payment Channel Validated]
+  B --> C[Transaction Submitted]
+  C --> D[Idempotency Checked]
+  D --> E[Customer Profile Requested]
+  E --> F[Transaction Enriched]
+  F --> G[Rules Evaluated]
+  F --> H[Anomaly Scored]
+  F --> I[Graph Signals Requested]
+  G --> J[Risk Score Calculated]
+  H --> J
+  I --> J
+  J --> K{Decision}
+  K -->|Approve| L[Authorization Approved]
+  K -->|Review| M[Fraud Case Opened]
+  K -->|Block| N[Authorization Blocked]
+  M --> O[Analyst Decision Captured]
+  L --> P[Audit Event Stored]
+  N --> P
+  O --> P

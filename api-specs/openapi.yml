@@ -1,0 +1,248 @@
+openapi: "3.0.3"
+info:
+  title: "ShieldPay Fraud Detection API"
+  version: "1.0.0"
+servers:
+  - url: "https://api.shieldpay.example.com"
+paths:
+  /api/v1/transactions:
+    post:
+      summary: "Submit a transaction for fraud screening"
+      operationId: "submitTransaction"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/TransactionRequest"
+      responses:
+        202:
+          description: "Accepted"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/TransactionAccepted"
+        400:
+          description: "Invalid request"
+  /api/v1/transactions/{id}/risk-score:
+    get:
+      summary: "Get transaction risk score"
+      parameters:
+        - $ref: "#/components/parameters/TransactionId"
+      responses:
+        200:
+          description: "Risk score"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/RiskScore"
+        404:
+          description: "Not found"
+  /api/v1/cases:
+    get:
+      summary: "List investigation cases"
+      parameters:
+        - name: "status"
+          in: "query"
+          schema:
+            type: "string"
+      responses:
+        200:
+          description: "Cases"
+          content:
+            application/json:
+              schema:
+                type: "array"
+                items:
+                  $ref: "#/components/schemas/FraudCase"
+  /api/v1/cases/{id}/decision:
+    put:
+      summary: "Record analyst decision"
+      parameters:
+        - name: "id"
+          in: "path"
+          required: true
+          schema:
+            type: "string"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/CaseDecision"
+      responses:
+        200:
+          description: "Updated"
+  /api/v1/rules:
+    get:
+      summary: "List active fraud rules"
+      responses:
+        200:
+          description: "Rules"
+          content:
+            application/json:
+              schema:
+                type: "array"
+                items:
+                  $ref: "#/components/schemas/FraudRule"
+    post:
+      summary: "Create fraud rule"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/FraudRule"
+      responses:
+        201:
+          description: "Created"
+  /api/v1/dashboard/metrics:
+    get:
+      summary: "Get dashboard metrics"
+      responses:
+        200:
+          description: "Metrics"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/DashboardMetrics"
+components:
+  securitySchemes:
+    oauth2:
+      type: "oauth2"
+      flows:
+        clientCredentials:
+          tokenUrl: "https://auth.shieldpay.example.com/oauth2/token"
+          scopes:
+            fraud:write: "Submit transactions"
+            fraud:read: "Read decisions"
+            rules:admin: "Manage rules"
+  parameters:
+    TransactionId:
+      name: "id"
+      in: "path"
+      required: true
+      schema:
+        type: "string"
+  schemas:
+    Money:
+      type: "object"
+      required:
+        - currency
+        - amount
+      properties:
+        currency:
+          type: "string"
+        amount:
+          type: "number"
+          format: "double"
+    TransactionRequest:
+      type: "object"
+      required:
+        - transactionId
+        - customerId
+        - merchantId
+        - amount
+      properties:
+        transactionId:
+          type: "string"
+        customerId:
+          type: "string"
+        merchantId:
+          type: "string"
+        amount:
+          $ref: "#/components/schemas/Money"
+        channel:
+          type: "string"
+        mcc:
+          type: "string"
+        deviceId:
+          type: "string"
+        ipAddress:
+          type: "string"
+    TransactionAccepted:
+      type: "object"
+      properties:
+        transactionId:
+          type: "string"
+        status:
+          type: "string"
+          enum:
+            - ACCEPTED
+        correlationId:
+          type: "string"
+    RiskScore:
+      type: "object"
+      properties:
+        transactionId:
+          type: "string"
+        score:
+          type: "number"
+        decision:
+          type: "string"
+          enum:
+            - APPROVE
+            - REVIEW
+            - BLOCK
+            - STEP_UP
+        reasons:
+          type: "array"
+          items:
+            type: "string"
+    FraudCase:
+      type: "object"
+      properties:
+        caseId:
+          type: "string"
+        transactionId:
+          type: "string"
+        status:
+          type: "string"
+        priority:
+          type: "string"
+        assignedTo:
+          type: "string"
+    CaseDecision:
+      type: "object"
+      required:
+        - decision
+        - reason
+      properties:
+        decision:
+          type: "string"
+          enum:
+            - CONFIRMED_FRAUD
+            - FALSE_POSITIVE
+            - NEEDS_MORE_INFO
+        reason:
+          type: "string"
+    FraudRule:
+      type: "object"
+      required:
+        - ruleId
+        - category
+        - expression
+        - severity
+      properties:
+        ruleId:
+          type: "string"
+        category:
+          type: "string"
+        expression:
+          type: "string"
+        severity:
+          type: "string"
+    DashboardMetrics:
+      type: "object"
+      properties:
+        transactionsPerMinute:
+          type: "number"
+        fraudRate:
+          type: "number"
+        p95LatencyMs:
+          type: "number"
+        openCases:
+          type: "integer"
+security:
+  - oauth2:
+      - fraud:read

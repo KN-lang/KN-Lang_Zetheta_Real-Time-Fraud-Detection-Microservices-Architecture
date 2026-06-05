@@ -1,0 +1,12 @@
+flowchart LR
+  Commands[REST/gRPC Commands] --> Write[Command Services]
+  Write --> Kafka[(Kafka Event Log)]
+  Kafka --> Projector1[Risk Timeline Projector]
+  Kafka --> Projector2[Case Queue Projector]
+  Kafka --> Projector3[Rule Metrics Projector]
+  Projector1 --> ReadDB[(Read PostgreSQL)]
+  Projector2 --> Redis[(Redis Queue View)]
+  Projector3 --> OLAP[(Analytics Store)]
+  Dashboard[Dashboards and APIs] --> ReadDB
+  Dashboard --> Redis
+  Dashboard --> OLAP

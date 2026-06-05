@@ -1,0 +1,6 @@
+flowchart LR
+  C0[Rule Loader] --> C1[Rule Compiler]
+  C1[Rule Compiler] --> C2[Condition Evaluator]
+  C2[Condition Evaluator] --> C3[Action Resolver]
+  C3[Action Resolver] --> C4[Rule Metrics Exporter]
+  C4[Rule Metrics Exporter] --> K[(Kafka)]

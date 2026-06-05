@@ -1,0 +1,6 @@
+flowchart LR
+  C0[Signal Collector] --> C1[Score Aggregator]
+  C1[Score Aggregator] --> C2[Decision Policy Engine]
+  C2[Decision Policy Engine] --> C3[Explanation Builder]
+  C3[Explanation Builder] --> C4[Decision Publisher]
+  C4[Decision Publisher] --> K[(Kafka)]

@@ -16,3 +16,23 @@ The proposed microservices architecture for the Real-Time Fraud Detection Platfo
 
 ## Conclusion
 The architecture is approved for implementation, pending a successful pilot phase focusing on inter-service latency and Kafka partition tuning.
+
+## Risk Assessment Matrix
+
+| Risk | Impact | Likelihood | Mitigation |
+|--------|---------|------------|------------|
+| Kafka Backpressure | High | Medium | Partition scaling |
+| Graph Query Latency | High | Medium | Caching + pruning |
+| Model Drift | Medium | Medium | Retraining pipeline |
+| Eventual Consistency | Medium | High | Idempotent consumers |
+
+## Project Evolution
+
+Phase 1:
+Implemented fraud detection core including rules, anomalies, graph analysis, risk scoring, and case generation.
+
+Phase 2:
+Added Kafka-inspired event simulation using an EventBus, event contracts, topic topology, and event logging.
+
+Architecture Package:
+Designed a scalable production architecture using Kafka, Neo4j, Kubernetes, and independently deployable fraud analysis services.

@@ -1,0 +1,20 @@
+groups:
+  - name: shieldpay-fraud-platform
+    rules:
+      - alert: TransactionPipelineDown
+        expr: up{job="transaction-ingestion"} == 0
+        for: 1m
+        labels:
+          severity: P1
+        annotations:
+          summary: Transaction ingestion is down
+      - alert: KafkaConsumerLagHigh
+        expr: kafka_consumergroup_lag > 10000
+        for: 5m
+        labels:
+          severity: P2
+      - alert: DecisionLatencySLABreach
+        expr: histogram_quantile(0.95, rate(fraud_decision_latency_ms_bucket[5m])) > 250
+        for: 10m
+        labels:
+          severity: P2

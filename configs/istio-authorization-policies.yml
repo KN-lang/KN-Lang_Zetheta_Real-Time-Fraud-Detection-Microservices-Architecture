@@ -1,0 +1,23 @@
+apiVersion: security.istio.io/v1beta1
+kind: AuthorizationPolicy
+metadata:
+  name: shieldpay-default-deny
+  namespace: shieldpay
+spec: {}
+---
+apiVersion: security.istio.io/v1beta1
+kind: AuthorizationPolicy
+metadata:
+  name: allow-risk-signal-services
+  namespace: shieldpay
+spec:
+  selector:
+    matchLabels:
+      app: risk-scoring
+  rules:
+    - from:
+        - source:
+            principals:
+              - cluster.local/ns/shieldpay/sa/rule-engine
+              - cluster.local/ns/shieldpay/sa/anomaly-detection
+              - cluster.local/ns/shieldpay/sa/graph-analysis

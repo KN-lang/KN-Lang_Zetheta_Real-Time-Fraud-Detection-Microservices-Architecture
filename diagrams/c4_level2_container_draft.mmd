@@ -1,0 +1,18 @@
+flowchart LR
+  API[API Gateway] --> TI[transaction-ingestion]
+  TI --> K[(Kafka)]
+  K --> CP[customer-profile]
+  CP --> FS[feature-store]
+  FS --> K
+  K --> RE[rule-engine]
+  K --> ML[anomaly-detection]
+  K --> GA[graph-analysis]
+  RE --> K
+  ML --> K
+  GA --> K
+  K --> RS[risk-scoring]
+  RS --> K
+  K --> CM[case-management]
+  K --> NO[notification]
+  K --> AC[audit-compliance]
+  GA --> N4J[(Neo4j)]

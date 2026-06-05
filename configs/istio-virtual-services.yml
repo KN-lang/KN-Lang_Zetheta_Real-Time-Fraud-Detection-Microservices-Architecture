@@ -1,0 +1,26 @@
+apiVersion: networking.istio.io/v1beta1
+kind: VirtualService
+metadata:
+  name: shieldpay-routing
+spec:
+  hosts:
+    - api.shieldpay.example.com
+  gateways:
+    - shieldpay-gateway
+  http:
+    - match:
+        - uri:
+            prefix: /api/v1/transactions
+      route:
+        - destination:
+            host: transaction-ingestion.shieldpay.svc.cluster.local
+            port:
+              number: 8080
+    - match:
+        - uri:
+            prefix: /api/v1/cases
+      route:
+        - destination:
+            host: case-management.shieldpay.svc.cluster.local
+            port:
+              number: 8080

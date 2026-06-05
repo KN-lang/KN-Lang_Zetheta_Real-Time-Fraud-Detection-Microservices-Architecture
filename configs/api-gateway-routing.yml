@@ -1,0 +1,21 @@
+gateway:
+  name: shieldpay-public-api
+  routes:
+    - path: /api/v1/transactions
+      methods: [POST]
+      upstream: transaction-ingestion:8080
+      auth: oauth2
+      rateLimitPolicy: merchant-transaction-submit
+    - path: /api/v1/transactions/*/risk-score
+      methods: [GET]
+      upstream: risk-scoring:8080
+      auth: oauth2
+    - path: /api/v1/cases
+      methods: [GET]
+      upstream: case-management:8080
+      auth: oauth2
+    - path: /api/v1/rules
+      methods: [GET, POST]
+      upstream: rule-engine:8080
+      auth: oauth2
+      requiredScope: rules:admin
