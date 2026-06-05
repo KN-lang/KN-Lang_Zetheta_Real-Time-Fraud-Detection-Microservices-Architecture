@@ -1,58 +1,407 @@
 # Master Architecture Document
 
-## Project Scope
-`SWE-2C_FraudDetection_KshitijChauhan` designs ShieldPay, a real-time fraud detection platform for financial transactions. The target architecture replaces a high-coupling legacy monolith with ten independently deployable services connected by Apache Kafka, protected by service mesh controls, and operated through observable Kubernetes deployments.
+# Project 1C – Real-Time Fraud Detection Microservices Architecture
 
-## Core Architecture Decisions
-| Decision | Selected Approach | Rationale |
-| --- | --- | --- |
-| Service style | Microservices aligned to bounded contexts | Keeps transaction intake, fraud signals, decisions, investigations, and audit independently scalable. |
-| Event backbone | Apache Kafka with Protobuf schemas | Provides low-latency fan-out, replay, ordering by transaction/customer keys, and schema governance. |
-| External API | OpenAPI 3.0 REST via API gateway | Fits merchant/channel integration and supports OAuth, throttling, and idempotency controls. |
-| Internal API | gRPC with Protobuf | Supports low-latency service collaboration for profile, feature, rule, graph, and risk calls. |
-| Persistence | PostgreSQL, Redis, Neo4j, object storage | Matches transactional, low-latency feature, graph, and immutable evidence workloads. |
-| Security | OAuth/OIDC externally and Istio mTLS internally | Reduces credential sprawl and enforces workload identity and least privilege. |
-| Observability | Prometheus, Grafana, OpenTelemetry, structured logs | Enables SLA monitoring, traceable decisions, and incident response. |
+**Repository Name:** KN-Lang_Zetheta_Real-Time-Fraud-Detection-Microservices-Architecture
 
-## Service Architecture
-The platform uses ten services: `transaction-ingestion`, `customer-profile`, `feature-store`, `rule-engine`, `anomaly-detection`, `graph-analysis`, `risk-scoring`, `case-management`, `notification`, and `audit-compliance`.
+**Author:** Kshitij Chauhan
 
-The principal flow is:
-1. `transaction-ingestion` accepts and validates requests from the API gateway.
-2. Kafka distributes validated transactions to enrichment and fraud signal services.
-3. `rule-engine`, `anomaly-detection`, and `graph-analysis` publish independent signals.
-4. `risk-scoring` aggregates signals into `APPROVE`, `STEP_UP`, `REVIEW`, or `BLOCK`.
-5. `case-management`, `notification`, and `audit-compliance` handle investigations, customer/merchant communication, and immutable evidence.
+**Program:** Zetheta WorkBridge Platform
 
-## Deliverable Navigation
-| Area | Files |
-| --- | --- |
-| Domain discovery | [Day01_Domain_Glossary.md](Day01_Domain_Glossary.md), [Day01_Legacy_Monolith_Analysis.md](Day01_Legacy_Monolith_Analysis.md), [day01_event_storming_initial.mmd](../diagrams/day01_event_storming_initial.mmd) |
-| Context and decomposition | [Day02_Bounded_Context_Map.md](Day02_Bounded_Context_Map.md), [Day02_Service_Decomposition_Table.md](Day02_Service_Decomposition_Table.md), [c4_level1_context.mmd](../diagrams/c4_level1_context.mmd), [c4_level2_container_draft.mmd](../diagrams/c4_level2_container_draft.mmd) |
-| C4 and persistence | [c4_level2_container_final.mmd](../diagrams/c4_level2_container_final.mmd), [c4_level3_transaction_ingestion.mmd](../diagrams/c4_level3_transaction_ingestion.mmd), [c4_level3_rule_engine.mmd](../diagrams/c4_level3_rule_engine.mmd), [c4_level3_anomaly_detection.mmd](../diagrams/c4_level3_anomaly_detection.mmd), [c4_level3_risk_scoring.mmd](../diagrams/c4_level3_risk_scoring.mmd), [Day03_Service_SLA_Table.md](Day03_Service_SLA_Table.md), [Day03_Polyglot_Persistence_Strategy.md](Day03_Polyglot_Persistence_Strategy.md) |
-| Events and APIs | [Day04_Kafka_Topic_Topology.md](Day04_Kafka_Topic_Topology.md), [events.proto](../api-specs/events.proto), [schema-registry-config.yml](../configs/schema-registry-config.yml), [Day04_DLQ_Strategy.md](Day04_DLQ_Strategy.md), [openapi.yml](../api-specs/openapi.yml), [internal-services.proto](../api-specs/internal-services.proto), [api-gateway-routing.yml](../configs/api-gateway-routing.yml), [Day05_Authentication_Authorization.md](Day05_Authentication_Authorization.md) |
-| Workflows and CQRS | [day06_complete_event_storming_50_events.mmd](../diagrams/day06_complete_event_storming_50_events.mmd), [Day06_Saga_Workflows.md](Day06_Saga_Workflows.md), [Day06_CQRS_Read_Models.md](Day06_CQRS_Read_Models.md), [day06_cqrs_topology.mmd](../diagrams/day06_cqrs_topology.mmd) |
-| Rules | [rule-schema.json](../configs/rule-schema.json), [sample-rules.yml](../configs/sample-rules.yml), [Day07_Rule_Lifecycle.md](Day07_Rule_Lifecycle.md), [day07_rule_lifecycle_state_machine.mmd](../diagrams/day07_rule_lifecycle_state_machine.mmd), [Day07_Rule_Simulation_Design.md](Day07_Rule_Simulation_Design.md), [Day07_Rule_Performance_Monitoring.md](Day07_Rule_Performance_Monitoring.md) |
-| ML and graph | [Day08_ML_Model_Serving_Architecture.md](Day08_ML_Model_Serving_Architecture.md), [Day08_Feature_Store_Design.md](Day08_Feature_Store_Design.md), [day08_ml_serving_architecture.mmd](../diagrams/day08_ml_serving_architecture.mmd), [Day08_Model_Monitoring_Drift_Detection.md](Day08_Model_Monitoring_Drift_Detection.md), [Day08_Champion_Challenger_Framework.md](Day08_Champion_Challenger_Framework.md), [Day09_Graph_Database_Schema.md](Day09_Graph_Database_Schema.md), [neo4j_schema.cypher](../configs/neo4j_schema.cypher), [fraud_detection_queries.cypher](../configs/fraud_detection_queries.cypher) |
-| Security and operations | [Day10_Service_Communication_Matrix.md](Day10_Service_Communication_Matrix.md), [Day10_Encryption_Strategy.md](Day10_Encryption_Strategy.md), [Day10_PCI_DSS_Compliance_Mapping.md](Day10_PCI_DSS_Compliance_Mapping.md), [Day11_API_Gateway_Design.md](Day11_API_Gateway_Design.md), [Day11_Rate_Limiting_Policy.md](Day11_Rate_Limiting_Policy.md), [Day11_Circuit_Breaker_Design.md](Day11_Circuit_Breaker_Design.md), [Day12_Grafana_Dashboard_Specifications.md](Day12_Grafana_Dashboard_Specifications.md), [prometheus-alert-rules.yml](../configs/prometheus-alert-rules.yml), [runbooks](runbooks/P1_Transaction_Pipeline_Down.md) |
-| Delivery and final material | [Day14_CICD_Pipeline_Design.md](Day14_CICD_Pipeline_Design.md), [ci.yml](../.github/workflows/ci.yml), [Day14_Multi_Region_Deployment_Topology.md](Day14_Multi_Region_Deployment_Topology.md), [day14_deployment_topology.mmd](../diagrams/day14_deployment_topology.mmd), [Day14_Disaster_Recovery_Plan.md](Day14_Disaster_Recovery_Plan.md), [Board_Presentation_Outline.md](../presentation/Board_Presentation_Outline.md), [video_script.md](../presentation/video_script.md), [AI_USAGE.md](AI_USAGE.md), [ERROR_DETECTION.md](ERROR_DETECTION.md) |
+**Project Type:** Enterprise Architecture & Distributed Systems Design
 
-## Kafka Topic Topology
-The canonical Project 1C backbone topics are `fraud.transactions.raw`, `fraud.transactions.enriched`, `fraud.rule.results`, `fraud.anomaly.scores`, `fraud.graph.signals`, `fraud.risk.decisions`, `fraud.notifications`, and `fraud.audit.events`. Supporting topics include `fraud.transactions.validated`, `fraud.cases.events`, `fraud.retry.*`, and `fraud.dlq`.
+**Architecture Codename:** ShieldPay
 
-Local Kafka deployment instructions are available in [KAFKA_LOCAL_DEPLOYMENT.md](KAFKA_LOCAL_DEPLOYMENT.md), backed by [docker-compose.yml](../docker-compose.yml).
+---
 
-## Compliance Position
-The architecture narrows PCI DSS scope by keeping PAN and sensitive authentication data out of analytical services. It supports RBI-style operational resilience, auditability, incident response, customer notification, and data residency expectations. GDPR considerations are addressed through purpose limitation, retention control, minimization, and auditable access to personal data.
+# Executive Summary
 
-## Operational Readiness
-The repository includes Prometheus alert rules, Grafana dashboard specifications, OpenTelemetry tracing, structured logging standards, P1-P4 runbooks, CI/CD design, Kubernetes samples, and multi-region disaster recovery material. These artifacts make the design reviewable as an architecture submission and give a clear path toward production implementation.
+This project presents the design of **ShieldPay**, a real-time fraud detection platform built using modern distributed systems and cloud-native architectural principles.
 
-## Executive Review Additions
+The platform is designed to process financial transactions at scale, identify fraudulent activity in real time, and support explainable risk decisions through a combination of:
 
-- [EVALUATION_TRACEABILITY_MATRIX.md](EVALUATION_TRACEABILITY_MATRIX.md) maps every requirement to evidence.
-- [BOARD_DEFENSE_GUIDE.md](BOARD_DEFENSE_GUIDE.md) prepares CTO, CRO, VP Engineering, Compliance, and CFO review answers.
-- [CASE_STUDY_MAPPING.md](CASE_STUDY_MAPPING.md) maps architecture controls to Target, Cosmos Bank, Netflix, and Wirecard lessons.
-- [COMPLIANCE_MATRIX.md](COMPLIANCE_MATRIX.md) maps PCI DSS, RBI, and GDPR controls.
-- [COST_MODEL.md](COST_MODEL.md) addresses cost and build-vs-buy tradeoffs.
-- [SUBMISSION_READINESS_REPORT.md](SUBMISSION_READINESS_REPORT.md) scores final readiness by reviewer lens.
+* Rule-Based Detection
+* Machine Learning Anomaly Detection
+* Graph-Based Fraud Analysis
+* Event-Driven Processing
+* Cloud-Native Infrastructure
+
+The architecture replaces a tightly coupled monolithic fraud platform with a scalable microservices ecosystem connected through Apache Kafka and secured through a service mesh architecture.
+
+The solution focuses on:
+
+* Scalability
+* Reliability
+* Security
+* Regulatory Compliance
+* Observability
+* Operational Resilience
+
+---
+
+# Business Context
+
+Financial institutions face increasingly sophisticated fraud attacks including:
+
+* Account Takeover
+* Mule Accounts
+* Synthetic Identity Fraud
+* Card Testing Attacks
+* Merchant Abuse
+* Fraud Rings
+* High-Velocity Transaction Fraud
+
+Traditional fraud systems often suffer from:
+
+* Monolithic architectures
+* Batch processing limitations
+* Slow deployment cycles
+* Hardcoded rule engines
+* Limited scalability
+* Poor fraud explainability
+
+The objective of ShieldPay is to enable real-time fraud decisioning while maintaining operational resilience and compliance requirements.
+
+---
+
+# Architecture Vision
+
+The architecture follows five core principles:
+
+### 1. Event-Driven Architecture
+
+Apache Kafka serves as the central event backbone.
+
+All major business activities are represented as immutable events.
+
+Benefits:
+
+* Decoupled services
+* Replay capability
+* Horizontal scalability
+* Event sourcing readiness
+
+---
+
+### 2. Domain-Driven Design
+
+The system is decomposed into business-aligned bounded contexts.
+
+Each service owns:
+
+* Its business capability
+* Its data model
+* Its deployment lifecycle
+
+This reduces coupling and improves maintainability.
+
+---
+
+### 3. Layered Fraud Detection
+
+Fraud detection is performed through multiple independent engines:
+
+1. Rules Engine
+2. Anomaly Detection Engine
+3. Graph Analytics Engine
+
+The outputs are combined into a unified risk score.
+
+---
+
+### 4. Cloud-Native Operations
+
+The platform is designed for Kubernetes deployment with:
+
+* Auto-scaling
+* Rolling updates
+* Multi-region deployment
+* Disaster recovery support
+
+---
+
+### 5. Security by Design
+
+Security controls are embedded throughout the architecture.
+
+Key controls include:
+
+* OAuth2/OIDC
+* Mutual TLS
+* Role-Based Access Control
+* Encryption at Rest
+* Encryption in Transit
+* Audit Logging
+
+---
+
+# High-Level System Architecture
+
+The platform consists of ten independently deployable services.
+
+| Service               | Responsibility                                  |
+| --------------------- | ----------------------------------------------- |
+| Transaction Ingestion | Receives and validates transactions             |
+| Customer Profile      | Provides customer risk context                  |
+| Feature Store         | Maintains ML features                           |
+| Rule Engine           | Executes fraud rules                            |
+| Anomaly Detection     | Detects unusual behavior                        |
+| Graph Analysis        | Identifies fraud rings and hidden relationships |
+| Risk Scoring          | Aggregates fraud signals                        |
+| Case Management       | Handles investigations                          |
+| Notification          | Sends alerts and communications                 |
+| Audit & Compliance    | Maintains immutable evidence                    |
+
+---
+
+# End-to-End Transaction Flow
+
+### Step 1 – Transaction Submission
+
+A merchant or payment channel submits a transaction through the API Gateway.
+
+### Step 2 – Validation & Enrichment
+
+The Transaction Ingestion Service validates the request and publishes events to Kafka.
+
+### Step 3 – Fraud Signal Generation
+
+Three parallel fraud detection systems evaluate the transaction:
+
+* Rules Engine
+* Anomaly Detection Engine
+* Graph Analysis Engine
+
+### Step 4 – Risk Aggregation
+
+The Risk Scoring Service combines all fraud signals into a single decision.
+
+Possible outcomes:
+
+* APPROVE
+* STEP_UP
+* REVIEW
+* BLOCK
+
+### Step 5 – Investigation & Audit
+
+Case Management, Notification, and Audit Services process the decision and maintain evidence.
+
+---
+
+# Kafka Event Backbone
+
+Apache Kafka acts as the primary communication mechanism between services.
+
+### Core Topics
+
+| Topic                       |
+| --------------------------- |
+| fraud.transactions.raw      |
+| fraud.transactions.enriched |
+| fraud.rule.results          |
+| fraud.anomaly.scores        |
+| fraud.graph.signals         |
+| fraud.risk.decisions        |
+| fraud.notifications         |
+| fraud.audit.events          |
+
+### Supporting Topics
+
+| Topic                        |
+| ---------------------------- |
+| fraud.transactions.validated |
+| fraud.cases.events           |
+| fraud.retry.*                |
+| fraud.dlq                    |
+
+Kafka deployment instructions are documented in:
+
+```text
+docs/KAFKA_LOCAL_DEPLOYMENT.md
+docker-compose.yml
+```
+
+---
+
+# Technology Architecture
+
+| Layer                  | Technology     |
+| ---------------------- | -------------- |
+| Event Streaming        | Apache Kafka   |
+| APIs                   | OpenAPI 3.0    |
+| Internal Communication | gRPC           |
+| Serialization          | Protobuf       |
+| Relational Storage     | PostgreSQL     |
+| Caching                | Redis          |
+| Graph Analytics        | Neo4j          |
+| Containers             | Docker         |
+| Orchestration          | Kubernetes     |
+| Service Mesh           | Istio          |
+| Gateway                | Kong           |
+| Monitoring             | Prometheus     |
+| Dashboards             | Grafana        |
+| Tracing                | OpenTelemetry  |
+| CI/CD                  | GitHub Actions |
+
+---
+
+# Security Architecture
+
+The platform adopts a defense-in-depth approach.
+
+### External Security
+
+* OAuth2
+* OpenID Connect
+* API Rate Limiting
+* WAF Integration
+
+### Internal Security
+
+* Istio Service Mesh
+* Mutual TLS
+* Service Authorization Policies
+* Workload Identity
+
+### Data Protection
+
+* AES-256 Encryption
+* Tokenization
+* Key Rotation
+* Vault Integration
+
+---
+
+# Compliance Architecture
+
+The solution aligns with:
+
+### PCI DSS
+
+* Cardholder data protection
+* Audit logging
+* Access controls
+
+### RBI Operational Resilience
+
+* Incident response
+* Disaster recovery
+* Operational monitoring
+
+### GDPR
+
+* Data minimization
+* Retention controls
+* Auditability
+* Purpose limitation
+
+Detailed mappings are available in:
+
+```text
+docs/COMPLIANCE_MATRIX.md
+docs/Day10_PCI_DSS_Compliance_Mapping.md
+```
+
+---
+
+# Observability & Reliability
+
+Operational visibility is achieved through:
+
+* Structured Logging
+* Metrics Collection
+* Distributed Tracing
+* Alerting
+* Dashboarding
+
+The repository includes:
+
+* Prometheus Rules
+* Grafana Dashboards
+* OpenTelemetry Configuration
+* Incident Runbooks
+* Disaster Recovery Plans
+
+---
+
+# Architecture Review Package
+
+The following documents are recommended for reviewers.
+
+## Start Here
+
+1. README.md
+2. EVALUATION_TRACEABILITY_MATRIX.md
+3. SUBMISSION_READINESS_REPORT.md
+
+---
+
+## Architecture Design
+
+* Day02_Bounded_Context_Map.md
+* Day02_Service_Decomposition_Table.md
+* c4_level1_context.mmd
+* c4_level2_container_final.mmd
+* c4_level3_*.mmd
+
+---
+
+## Event-Driven Design
+
+* Day04_Kafka_Topic_Topology.md
+* events.proto
+* Day04_DLQ_Strategy.md
+
+---
+
+## APIs & Contracts
+
+* openapi.yml
+* internal-services.proto
+
+---
+
+## Fraud Detection
+
+* sample-rules.yml
+* Day08_ML_Model_Serving_Architecture.md
+* Day09_Graph_Database_Schema.md
+
+---
+
+## Security & Compliance
+
+* Day10_Encryption_Strategy.md
+* Day10_PCI_DSS_Compliance_Mapping.md
+* COMPLIANCE_MATRIX.md
+
+---
+
+## Deployment & Operations
+
+* Day14_CICD_Pipeline_Design.md
+* Day14_Disaster_Recovery_Plan.md
+* prometheus-alert-rules.yml
+* docs/runbooks/
+
+---
+
+# Executive Review Additions
+
+| Document                          | Purpose                         |
+| --------------------------------- | ------------------------------- |
+| EVALUATION_TRACEABILITY_MATRIX.md | Requirement coverage validation |
+| BOARD_DEFENSE_GUIDE.md            | Architecture review preparation |
+| CASE_STUDY_MAPPING.md             | Real-world architecture lessons |
+| COMPLIANCE_MATRIX.md              | Regulatory mapping              |
+| COST_MODEL.md                     | Cost and scaling analysis       |
+| SUBMISSION_READINESS_REPORT.md    | Final readiness assessment      |
+
+---
+
+# Conclusion
+
+ShieldPay demonstrates how a traditional fraud detection platform can be transformed into a modern, event-driven, microservices-based architecture capable of supporting real-time transaction monitoring, fraud prevention, and regulatory compliance.
+
+The repository combines architecture design, security controls, operational planning, deployment strategy, observability, and governance into a cohesive platform blueprint suitable for enterprise-scale financial environments.

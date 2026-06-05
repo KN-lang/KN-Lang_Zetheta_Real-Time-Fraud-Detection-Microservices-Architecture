@@ -6,7 +6,9 @@
 
 **Repository:** KN-Lang_Zetheta_Real-Time-Fraud-Detection-Microservices-Architecture
 
-**Project Type:** Enterprise Architecture Design & Distributed Systems
+**Architecture Codename:** ShieldPay
+
+**Project Type:** Enterprise Architecture Design, Distributed Systems & Fraud Detection Platform
 
 ---
 
@@ -14,55 +16,132 @@
 
 This repository contains the complete submission for **Project 1C: Real-Time Fraud Detection Microservices Architecture** under the Zetheta WorkBridge Platform.
 
-The project presents the design of **ShieldPay**, a cloud-native, event-driven fraud detection platform capable of processing financial transactions in real time. The solution leverages Apache Kafka, microservices, machine learning, graph analytics, and modern cloud-native deployment patterns to identify suspicious activity, reduce fraud losses, and improve operational visibility.
+The project presents the design of **ShieldPay**, a cloud-native, event-driven fraud detection platform capable of processing financial transactions in real time.
 
-The architecture has been designed with a strong focus on scalability, resilience, security, observability, regulatory compliance, and maintainability.
+The architecture combines:
+
+* Apache Kafka event streaming
+* Microservices architecture
+* Rule-based fraud detection
+* Machine learning-based detection
+* Graph analytics using Neo4j
+* Risk scoring and case management
+* Service mesh security
+* Cloud-native deployment
+* Enterprise observability
+
+The solution is designed to improve fraud detection accuracy, reduce operational risk, increase scalability, and provide explainable fraud decisions suitable for regulated financial environments.
+
+---
+
+# Architecture Highlights
+
+| Metric                | Value              |
+| --------------------- | ------------------ |
+| Microservices         | 10                 |
+| Kafka Topics          | 11                 |
+| Fraud Rules           | 20                 |
+| Event Storming Events | 50+                |
+| Cypher Fraud Queries  | 6                  |
+| C4 Diagrams           | 6                  |
+| gRPC Services         | 6                  |
+| REST API Endpoints    | 7+                 |
+| Runbooks              | 6                  |
+| Compliance Frameworks | PCI DSS, RBI, GDPR |
 
 ---
 
 # Business Problem
 
-Traditional fraud detection platforms often suffer from several limitations:
+Traditional fraud detection platforms often suffer from:
 
-* Monolithic application architecture
-* Batch-oriented processing pipelines
-* Hardcoded fraud rules
+* Monolithic architectures
+* Batch-based processing
+* Hardcoded rule engines
 * Limited scalability
-* High operational complexity
-* Slow response to emerging fraud patterns
-* Poor visibility into fraud investigations
+* Slow fraud response times
+* High operational overhead
+* Poor fraud explainability
 
-These limitations increase the risk of financial losses, delayed fraud detection, and poor customer experience.
+These limitations increase financial losses, create investigation delays, and reduce customer trust.
 
-To address these challenges, this project proposes a distributed, event-driven architecture that combines rule-based detection, machine learning models, graph-based fraud analysis, and real-time risk scoring.
+To address these challenges, this project proposes a distributed, event-driven architecture that combines rule-based detection, machine learning models, graph analytics, and real-time risk scoring.
 
 ---
 
 # Solution Overview
 
-ShieldPay is designed as a microservices ecosystem consisting of specialized services responsible for transaction processing, fraud analysis, risk scoring, case management, notifications, and compliance.
+ShieldPay is designed as a microservices ecosystem responsible for transaction processing, fraud analysis, risk scoring, investigations, notifications, and compliance.
 
-The platform processes transaction events through Apache Kafka and evaluates them using three complementary fraud detection approaches:
+The platform evaluates transactions through three complementary fraud detection layers:
 
 ### Rule-Based Detection
 
-Detects known fraud patterns through configurable business rules.
+Detects known fraud patterns through configurable business rules and governance workflows.
 
 ### Machine Learning Detection
 
-Identifies abnormal transaction behaviour using anomaly detection models.
+Identifies abnormal transaction behaviour through anomaly detection models, monitoring, drift detection, and champion-challenger strategies.
 
 ### Graph-Based Analysis
 
-Detects fraud rings and hidden relationships between customers, devices, merchants, IP addresses, and accounts using graph analytics.
+Detects fraud rings and hidden relationships between customers, devices, merchants, IP addresses, and accounts using Neo4j graph analytics.
 
-The outputs of these systems are aggregated into a unified risk score that supports automated and human-assisted fraud decisions.
+The outputs are aggregated into a unified risk score that supports:
+
+* Approve
+* Step-up authentication
+* Manual review
+* Block
+
+decisions.
+
+---
+
+# Architecture Principles
+
+The architecture is guided by the following principles:
+
+### Domain Driven Design
+
+Business capabilities are decomposed into bounded contexts and independently deployable services.
+
+### Event-Driven Processing
+
+Apache Kafka serves as the central event backbone connecting all fraud detection workflows.
+
+### Security by Design
+
+Security controls are integrated throughout the platform using OAuth2, mTLS, encryption, tokenisation, and audit logging.
+
+### Cloud-Native Operations
+
+The platform is designed for Kubernetes deployment with autoscaling, resilience, and disaster recovery capabilities.
+
+### Observability First
+
+Every business decision is traceable through metrics, logs, traces, alerts, dashboards, and runbooks.
+
+---
+
+# Business Impact
+
+The proposed architecture delivers:
+
+* Faster fraud detection
+* Reduced fraud losses
+* Improved analyst productivity
+* Better customer trust
+* Increased scalability
+* Improved auditability
+* Regulatory compliance readiness
+* Enhanced operational resilience
 
 ---
 
 # High-Level Architecture
 
-Core platform services:
+## Core Platform Services
 
 * Transaction Ingestion Service
 * Customer Profile Service
@@ -75,7 +154,7 @@ Core platform services:
 * Notification Service
 * Audit & Compliance Service
 
-Supporting platform components:
+## Supporting Components
 
 * Apache Kafka
 * Schema Registry
@@ -84,8 +163,8 @@ Supporting platform components:
 * Neo4j
 * Elasticsearch
 * TimescaleDB
-* Istio Service Mesh
 * Kong API Gateway
+* Istio Service Mesh
 * Prometheus
 * Grafana
 * OpenTelemetry
@@ -109,31 +188,93 @@ Supporting platform components:
 
 ### docs/
 
-Contains architecture documentation, design decisions, security strategy, compliance mappings, observability specifications, deployment plans, and the final architecture package.
+Architecture documentation, compliance mappings, observability specifications, deployment designs, executive review material, and final architecture package.
 
 ### diagrams/
 
-Contains C4 architecture diagrams, event storming models, CQRS workflows, ML architecture diagrams, authentication flows, and deployment topologies.
+C4 models, event storming diagrams, CQRS workflows, deployment topologies, ML architecture diagrams, and security flows.
 
 ### api-specs/
 
-Contains OpenAPI specifications, Protobuf contracts, and event schema definitions.
+OpenAPI contracts, Protobuf contracts, and event schema definitions.
 
 ### configs/
 
-Contains infrastructure, observability, security, gateway, schema registry, Neo4j, and rule engine configuration artifacts.
+Infrastructure, Kafka, Neo4j, Istio, Kong, observability, alerting, and security configurations.
 
 ### samples/
 
-Contains deployment examples, Dockerfiles, Kubernetes manifests, and infrastructure templates.
+Dockerfiles, Kubernetes manifests, deployment examples, autoscaling, and network policy artifacts.
 
 ### presentation/
 
-Contains board presentation material and project walkthrough documentation.
+Board presentation material and project walkthrough scripts.
 
 ### daily-commits/
 
-Contains daily work logs documenting the evolution of the architecture across the project timeline.
+Day-by-day project evolution and implementation logs.
+
+---
+
+# Recommended Review Path
+
+For reviewers with limited time:
+
+### 1. Executive Review
+
+```text
+docs/Master_Architecture_Document.md
+docs/SUBMISSION_READINESS_REPORT.md
+```
+
+### 2. Requirement Coverage
+
+```text
+docs/EVALUATION_TRACEABILITY_MATRIX.md
+```
+
+### 3. Architecture Review
+
+```text
+diagrams/c4_level1_context.mmd
+diagrams/c4_level2_container_final.mmd
+diagrams/c4_level3_*.mmd
+```
+
+### 4. Kafka & Event Architecture
+
+```text
+docs/Day04_Kafka_Topic_Topology.md
+docs/KAFKA_LOCAL_DEPLOYMENT.md
+docker-compose.yml
+```
+
+### 5. API Contracts
+
+```text
+api-specs/openapi.yml
+api-specs/internal-services.proto
+api-specs/events.proto
+```
+
+### 6. Security & Compliance
+
+```text
+docs/COMPLIANCE_MATRIX.md
+docs/Day10_Encryption_Strategy.md
+docs/Day10_PCI_DSS_Compliance_Mapping.md
+configs/istio-*.yml
+configs/kong-gateway-config.yml
+```
+
+### 7. Operations & Deployment
+
+```text
+configs/prometheus-alert-rules.yml
+docs/Day12_Grafana_Dashboard_Specifications.md
+docs/Day14_Disaster_Recovery_Plan.md
+samples/
+```
 
 ---
 
@@ -163,92 +304,28 @@ Contains daily work logs documenting the evolution of the architecture across th
 
 # Technology Stack
 
-| Category        | Technologies             |
-| --------------- | ------------------------ |
-| Event Streaming | Apache Kafka             |
-| APIs            | OpenAPI 3.0, gRPC        |
-| Serialization   | Protobuf                 |
+| Category        | Technologies                                         |
+| --------------- | ---------------------------------------------------- |
+| Event Streaming | Apache Kafka                                         |
+| APIs            | OpenAPI 3.0, gRPC                                    |
+| Serialization   | Protobuf                                             |
 | Databases       | PostgreSQL, Redis, Neo4j, Elasticsearch, TimescaleDB |
-| Infrastructure  | Docker, Kubernetes       |
-| Service Mesh    | Istio                    |
-| API Gateway     | Kong                     |
-| Monitoring      | Prometheus, Grafana      |
-| Observability   | OpenTelemetry            |
-| CI/CD           | GitHub Actions           |
-| Languages       | Python, YAML, Mermaid    |
-
----
-
-# How to Review This Repository
-
-For the fastest review experience, follow the sequence below:
-
-### Step 1
-
-Read:
-
-```text
-docs/Master_Architecture_Document.md
-```
-
-This document contains the complete architectural narrative and key design decisions.
-
-### Step 2
-
-Review:
-
-```text
-docs/EVALUATION_TRACEABILITY_MATRIX.md
-```
-
-This maps every project requirement to the corresponding deliverable.
-
-Also review:
-
-```text
-docs/BOARD_DEFENSE_GUIDE.md
-docs/CASE_STUDY_MAPPING.md
-docs/COMPLIANCE_MATRIX.md
-docs/COST_MODEL.md
-docs/SUBMISSION_READINESS_REPORT.md
-docs/KAFKA_LOCAL_DEPLOYMENT.md
-```
-
-### Step 3
-
-Review the architecture diagrams:
-
-```text
-diagrams/c4_level1_context.mmd
-diagrams/c4_level2_container_final.mmd
-diagrams/c4_level3_*.mmd
-```
-
-### Step 4
-
-Review platform contracts:
-
-```text
-api-specs/openapi.yml
-api-specs/internal-services.proto
-api-specs/events.proto
-```
-
-### Step 5
-
-Review infrastructure and deployment assets:
-
-```text
-configs/
-samples/
-```
+| Infrastructure  | Docker, Kubernetes                                   |
+| Service Mesh    | Istio                                                |
+| API Gateway     | Kong                                                 |
+| Monitoring      | Prometheus, Grafana                                  |
+| Observability   | OpenTelemetry                                        |
+| CI/CD           | GitHub Actions                                       |
+| Languages       | Python, YAML, Mermaid                                |
 
 ---
 
 # Submission Validation Checklist
 
-* [x] Microservices Architecture Defined
-* [x] 8+ Kafka Topics Implemented
+* [x] 10 Microservices Defined
+* [x] Kafka Event Backbone
+* [x] Local Kafka Deployment
+* [x] 8+ Kafka Topics
 * [x] C4 Level 1 Architecture
 * [x] C4 Level 2 Architecture
 * [x] Four Level 3 Component Diagrams
@@ -264,7 +341,6 @@ samples/
 * [x] Disaster Recovery Plan
 * [x] Presentation Package
 * [x] Evaluation Traceability Matrix
-* [x] Local Kafka Docker Compose
 * [x] Compliance Matrix
 * [x] Cost Model
 * [x] Board Defense Guide
@@ -276,17 +352,17 @@ samples/
 
 This project provided practical exposure to:
 
-* Distributed Systems Architecture
+* Distributed Systems Design
 * Domain Driven Design
-* Event-Driven Systems
 * Apache Kafka
-* Fraud Detection Platforms
+* Event-Driven Architectures
+* Fraud Detection Systems
 * Graph Analytics
 * MLOps Concepts
-* Cloud-Native Design
-* Kubernetes Deployments
+* Kubernetes
 * Service Mesh Security
 * Observability Engineering
+* Compliance-Aware Architecture
 * Enterprise Architecture Documentation
 
 ---
@@ -295,12 +371,12 @@ This project provided practical exposure to:
 
 **Kshitij Chauhan**
 
-Project Repository:
+Repository:
 
 https://github.com/KN-lang/KN-Lang_Zetheta_Real-Time-Fraud-Detection-Microservices-Architecture
 
 Project:
 
-Zetheta WorkBridge Platform – Project 1C
+**Zetheta WorkBridge Platform – Project 1C**
 
-Real-Time Fraud Detection Microservices Architecture
+**Real-Time Fraud Detection Microservices Architecture**
